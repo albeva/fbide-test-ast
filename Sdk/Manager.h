@@ -1,22 +1,22 @@
 /*
- * This file is part of FBIde project
- *
- * FBIde is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * FBIde is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with FBIde.  If not, see <http://www.gnu.org/licenses/>.
- *
- * Author: Albert Varaksin <albeva@me.com>
- * Copyright (C) The FBIde development team
- */
+* This file is part of FBIde project
+*
+* FBIde is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* FBIde is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with FBIde.  If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Albert Varaksin <albeva@me.com>
+* Copyright (C) The FBIde development team
+*/
 #pragma once
 
 // get manager
@@ -53,39 +53,39 @@ namespace fbi
         static void Release();
 
         // private methods
-        protected :
+    protected:
 
-            // Release managers
-            void ReleaseManagers();
+        // Release managers
+        void ReleaseManagers();
 
-            // can't create directly
-            Manager() {};
+        // can't create directly
+        Manager() {};
 
-            // ensure delete to fail. Use Release() instead!
-            virtual ~Manager() {};
+        // ensure delete to fail. Use Release() instead!
+        virtual ~Manager() {};
     };
 }
 
 
 // macro to declare a manager class in the header
 #define DECLARE_MANAGER(_class) \
-    protected : \
-    _class () {}; \
-    virtual ~_class () {}; \
-    private : \
+    protected: \
+    _class() {}; \
+    virtual ~_class() {}; \
+    private: \
     friend class Manager; \
-    static _class * GetInstance (); \
-    static void Release ();
+    static _class * GetInstance(); \
+    static void Release();
 
 // Macro to implement Manager class logic in the source
 #define IMPLEMENT_MANAGER(_baseClass, _extClass) \
     namespace { _extClass * the_instance = nullptr; } \
-    _baseClass * _baseClass::GetInstance () { \
-        if ( the_instance == nullptr ) the_instance = new _extClass; \
+        _baseClass * _baseClass::GetInstance() { \
+        if (the_instance == nullptr) the_instance = new _extClass; \
         return the_instance; \
     } \
-    void _baseClass::Release () { \
-        if ( the_instance == nullptr ) return; \
+    void _baseClass::Release() { \
+        if (the_instance == nullptr) return; \
         delete the_instance; \
         the_instance = nullptr; \
     }
