@@ -1,0 +1,4 @@
+fbide
+=====
+
+Editor for FreeBASIC
