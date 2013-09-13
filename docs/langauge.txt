@@ -1,0 +1,42 @@
+Goal 1:
+
+(* the program *)
+Program             = { Statement EndOfLine } .
+
+(* statement *)
+Statement           = VariableDeclaration
+                    | FunctionDeclaration
+                    | Expression
+                    | Assignment
+                    .
+
+(* Variable declaration *)
+VariableDeclaration = "DIM" id "AS" TypeExpression [ "=" Expression ] .
+
+(* Function delcaration *)
+FunctionDeclaration = "DECLARE" "FUNCTION" id "(" [ ArgumentDeclList ] ")" "AS" TypeExpression .
+
+(* Function argument list declaration *)
+ArgumentDeclList    = ArgumentDecl { "," ArgumentDecl } .
+
+(* Function argument declaration *)
+ArgumentDecl        = id "AS" TypeExpression .
+
+(* Type Expression *)
+TypeExpression      = "INTEGER"
+                    | "STRING"
+                    .
+
+(* Expression *)
+Expression          = FunctionCall
+                    | id
+                    .
+
+(* function call *)
+FunctionCall        = id "(" [ FunctionArgumentList ] ")" .
+
+(* function arguments list *)
+FunctionArgumentList= Expression { "," Expression } .
+
+(* Assignment *)
+Assignment          = id "=" Expression .

@@ -7,12 +7,68 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3685502217E3C2C5002EB0C5 /* LexFreeBasic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3685502117E3C2C5002EB0C5 /* LexFreeBasic.cpp */; };
+		3685505317E3C6A4002EB0C5 /* License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3685503917E3C6A4002EB0C5 /* License.txt */; };
+		3685505417E3C6A4002EB0C5 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3685504117E3C6A4002EB0C5 /* README.txt */; };
+		3685505517E3C6A4002EB0C5 /* Scintilla.iface in Resources */ = {isa = PBXBuildFile; fileRef = 3685504617E3C6A4002EB0C5 /* Scintilla.iface */; };
+		3685505A17E3D2A1002EB0C5 /* langauge.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3685505917E3D2A1002EB0C5 /* langauge.txt */; };
 		36C487D217E0FCD400906651 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36C487D117E0FCD400906651 /* Cocoa.framework */; };
 		36C4880617E0FDE500906651 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36C4880517E0FDE500906651 /* main.cpp */; };
 		36C4880917E0FF8400906651 /* wx.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 36C4880817E0FF8400906651 /* wx.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3631570317E2831800F23D8A /* base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = base.xcconfig; sourceTree = "<group>"; };
+		3685502117E3C2C5002EB0C5 /* LexFreeBasic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LexFreeBasic.cpp; path = sdk/LexFreeBasic.cpp; sourceTree = "<group>"; };
+		3685502417E3C6A4002EB0C5 /* Accessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Accessor.h; sourceTree = "<group>"; };
+		3685502517E3C6A4002EB0C5 /* AutoComplete.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoComplete.h; sourceTree = "<group>"; };
+		3685502617E3C6A4002EB0C5 /* CallTip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallTip.h; sourceTree = "<group>"; };
+		3685502717E3C6A4002EB0C5 /* Catalogue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Catalogue.h; sourceTree = "<group>"; };
+		3685502817E3C6A4002EB0C5 /* CellBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellBuffer.h; sourceTree = "<group>"; };
+		3685502917E3C6A4002EB0C5 /* CharacterSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CharacterSet.h; sourceTree = "<group>"; };
+		3685502A17E3C6A4002EB0C5 /* CharClassify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CharClassify.h; sourceTree = "<group>"; };
+		3685502B17E3C6A4002EB0C5 /* ContractionState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContractionState.h; sourceTree = "<group>"; };
+		3685502C17E3C6A4002EB0C5 /* Decoration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Decoration.h; sourceTree = "<group>"; };
+		3685502D17E3C6A4002EB0C5 /* Document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Document.h; sourceTree = "<group>"; };
+		3685502E17E3C6A4002EB0C5 /* Editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Editor.h; sourceTree = "<group>"; };
+		3685502F17E3C6A4002EB0C5 /* ExternalLexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExternalLexer.h; sourceTree = "<group>"; };
+		3685503017E3C6A4002EB0C5 /* FontQuality.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontQuality.h; sourceTree = "<group>"; };
+		3685503117E3C6A4002EB0C5 /* ILexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILexer.h; sourceTree = "<group>"; };
+		3685503217E3C6A4002EB0C5 /* Indicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Indicator.h; sourceTree = "<group>"; };
+		3685503317E3C6A4002EB0C5 /* KeyMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyMap.h; sourceTree = "<group>"; };
+		3685503417E3C6A4002EB0C5 /* LexAccessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LexAccessor.h; sourceTree = "<group>"; };
+		3685503517E3C6A4002EB0C5 /* LexerBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LexerBase.h; sourceTree = "<group>"; };
+		3685503617E3C6A4002EB0C5 /* LexerModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LexerModule.h; sourceTree = "<group>"; };
+		3685503717E3C6A4002EB0C5 /* LexerNoExceptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LexerNoExceptions.h; sourceTree = "<group>"; };
+		3685503817E3C6A4002EB0C5 /* LexerSimple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LexerSimple.h; sourceTree = "<group>"; };
+		3685503917E3C6A4002EB0C5 /* License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = License.txt; sourceTree = "<group>"; };
+		3685503A17E3C6A4002EB0C5 /* LineMarker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineMarker.h; sourceTree = "<group>"; };
+		3685503B17E3C6A4002EB0C5 /* OptionSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionSet.h; sourceTree = "<group>"; };
+		3685503C17E3C6A4002EB0C5 /* Partitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Partitioning.h; sourceTree = "<group>"; };
+		3685503D17E3C6A4002EB0C5 /* PerLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerLine.h; sourceTree = "<group>"; };
+		3685503E17E3C6A4002EB0C5 /* Platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Platform.h; sourceTree = "<group>"; };
+		3685503F17E3C6A4002EB0C5 /* PositionCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PositionCache.h; sourceTree = "<group>"; };
+		3685504017E3C6A4002EB0C5 /* PropSetSimple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropSetSimple.h; sourceTree = "<group>"; };
+		3685504117E3C6A4002EB0C5 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		3685504217E3C6A4002EB0C5 /* RESearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RESearch.h; sourceTree = "<group>"; };
+		3685504317E3C6A4002EB0C5 /* RunStyles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunStyles.h; sourceTree = "<group>"; };
+		3685504417E3C6A4002EB0C5 /* SciLexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SciLexer.h; sourceTree = "<group>"; };
+		3685504517E3C6A4002EB0C5 /* Scintilla.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scintilla.h; sourceTree = "<group>"; };
+		3685504617E3C6A4002EB0C5 /* Scintilla.iface */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Scintilla.iface; sourceTree = "<group>"; };
+		3685504717E3C6A4002EB0C5 /* ScintillaBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScintillaBase.h; sourceTree = "<group>"; };
+		3685504817E3C6A4002EB0C5 /* ScintillaWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScintillaWidget.h; sourceTree = "<group>"; };
+		3685504917E3C6A4002EB0C5 /* Selection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Selection.h; sourceTree = "<group>"; };
+		3685504A17E3C6A4002EB0C5 /* SparseState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SparseState.h; sourceTree = "<group>"; };
+		3685504B17E3C6A4002EB0C5 /* SplitVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplitVector.h; sourceTree = "<group>"; };
+		3685504C17E3C6A4002EB0C5 /* Style.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Style.h; sourceTree = "<group>"; };
+		3685504D17E3C6A4002EB0C5 /* StyleContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StyleContext.h; sourceTree = "<group>"; };
+		3685504E17E3C6A4002EB0C5 /* SVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVector.h; sourceTree = "<group>"; };
+		3685504F17E3C6A4002EB0C5 /* UniConversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniConversion.h; sourceTree = "<group>"; };
+		3685505017E3C6A4002EB0C5 /* ViewStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewStyle.h; sourceTree = "<group>"; };
+		3685505117E3C6A4002EB0C5 /* WordList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordList.h; sourceTree = "<group>"; };
+		3685505217E3C6A4002EB0C5 /* XPM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPM.h; sourceTree = "<group>"; };
+		3685505717E3CC3B002EB0C5 /* LexFreeBasic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LexFreeBasic.h; path = sdk/LexFreeBasic.h; sourceTree = "<group>"; };
+		3685505917E3D2A1002EB0C5 /* langauge.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = langauge.txt; path = docs/langauge.txt; sourceTree = "<group>"; };
 		36C487CE17E0FCD400906651 /* fbide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fbide.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36C487D117E0FCD400906651 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		36C487D417E0FCD400906651 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -37,9 +93,73 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3685502317E3C6A4002EB0C5 /* scintilla */ = {
+			isa = PBXGroup;
+			children = (
+				3685502417E3C6A4002EB0C5 /* Accessor.h */,
+				3685502517E3C6A4002EB0C5 /* AutoComplete.h */,
+				3685502617E3C6A4002EB0C5 /* CallTip.h */,
+				3685502717E3C6A4002EB0C5 /* Catalogue.h */,
+				3685502817E3C6A4002EB0C5 /* CellBuffer.h */,
+				3685502917E3C6A4002EB0C5 /* CharacterSet.h */,
+				3685502A17E3C6A4002EB0C5 /* CharClassify.h */,
+				3685502B17E3C6A4002EB0C5 /* ContractionState.h */,
+				3685502C17E3C6A4002EB0C5 /* Decoration.h */,
+				3685502D17E3C6A4002EB0C5 /* Document.h */,
+				3685502E17E3C6A4002EB0C5 /* Editor.h */,
+				3685502F17E3C6A4002EB0C5 /* ExternalLexer.h */,
+				3685503017E3C6A4002EB0C5 /* FontQuality.h */,
+				3685503117E3C6A4002EB0C5 /* ILexer.h */,
+				3685503217E3C6A4002EB0C5 /* Indicator.h */,
+				3685503317E3C6A4002EB0C5 /* KeyMap.h */,
+				3685503417E3C6A4002EB0C5 /* LexAccessor.h */,
+				3685503517E3C6A4002EB0C5 /* LexerBase.h */,
+				3685503617E3C6A4002EB0C5 /* LexerModule.h */,
+				3685503717E3C6A4002EB0C5 /* LexerNoExceptions.h */,
+				3685503817E3C6A4002EB0C5 /* LexerSimple.h */,
+				3685503917E3C6A4002EB0C5 /* License.txt */,
+				3685503A17E3C6A4002EB0C5 /* LineMarker.h */,
+				3685503B17E3C6A4002EB0C5 /* OptionSet.h */,
+				3685503C17E3C6A4002EB0C5 /* Partitioning.h */,
+				3685503D17E3C6A4002EB0C5 /* PerLine.h */,
+				3685503E17E3C6A4002EB0C5 /* Platform.h */,
+				3685503F17E3C6A4002EB0C5 /* PositionCache.h */,
+				3685504017E3C6A4002EB0C5 /* PropSetSimple.h */,
+				3685504117E3C6A4002EB0C5 /* README.txt */,
+				3685504217E3C6A4002EB0C5 /* RESearch.h */,
+				3685504317E3C6A4002EB0C5 /* RunStyles.h */,
+				3685504417E3C6A4002EB0C5 /* SciLexer.h */,
+				3685504517E3C6A4002EB0C5 /* Scintilla.h */,
+				3685504617E3C6A4002EB0C5 /* Scintilla.iface */,
+				3685504717E3C6A4002EB0C5 /* ScintillaBase.h */,
+				3685504817E3C6A4002EB0C5 /* ScintillaWidget.h */,
+				3685504917E3C6A4002EB0C5 /* Selection.h */,
+				3685504A17E3C6A4002EB0C5 /* SparseState.h */,
+				3685504B17E3C6A4002EB0C5 /* SplitVector.h */,
+				3685504C17E3C6A4002EB0C5 /* Style.h */,
+				3685504D17E3C6A4002EB0C5 /* StyleContext.h */,
+				3685504E17E3C6A4002EB0C5 /* SVector.h */,
+				3685504F17E3C6A4002EB0C5 /* UniConversion.h */,
+				3685505017E3C6A4002EB0C5 /* ViewStyle.h */,
+				3685505117E3C6A4002EB0C5 /* WordList.h */,
+				3685505217E3C6A4002EB0C5 /* XPM.h */,
+			);
+			name = scintilla;
+			path = sdk/scintilla;
+			sourceTree = "<group>";
+		};
+		3685505817E3D286002EB0C5 /* docs */ = {
+			isa = PBXGroup;
+			children = (
+				3685505917E3D2A1002EB0C5 /* langauge.txt */,
+			);
+			name = docs;
+			sourceTree = "<group>";
+		};
 		36C487C517E0FCD400906651 = {
 			isa = PBXGroup;
 			children = (
+				3685505817E3D286002EB0C5 /* docs */,
 				36C487D717E0FCD400906651 /* fbide */,
 				36C487D017E0FCD400906651 /* Frameworks */,
 				36C487CF17E0FCD400906651 /* Products */,
@@ -87,6 +207,7 @@
 			isa = PBXGroup;
 			children = (
 				36C4880817E0FF8400906651 /* wx.xcconfig */,
+				3631570317E2831800F23D8A /* base.xcconfig */,
 				36C487D917E0FCD400906651 /* fbide-Info.plist */,
 				36C487DF17E0FCD400906651 /* fbide-Prefix.pch */,
 			);
@@ -96,6 +217,9 @@
 		36C4880A17E100A600906651 /* SDK */ = {
 			isa = PBXGroup;
 			children = (
+				3685502317E3C6A4002EB0C5 /* scintilla */,
+				3685505717E3CC3B002EB0C5 /* LexFreeBasic.h */,
+				3685502117E3C2C5002EB0C5 /* LexFreeBasic.cpp */,
 				36C4880B17E100E800906651 /* fbide.pch.h */,
 			);
 			name = SDK;
@@ -155,7 +279,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3685505517E3C6A4002EB0C5 /* Scintilla.iface in Resources */,
+				3685505317E3C6A4002EB0C5 /* License.txt in Resources */,
+				3685505417E3C6A4002EB0C5 /* README.txt in Resources */,
 				36C4880917E0FF8400906651 /* wx.xcconfig in Resources */,
+				3685505A17E3D2A1002EB0C5 /* langauge.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,7 +301,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# c flags\nWX_CFLAGS=`/usr/local/bin/wx-config --cxxflags`\n# ld flags\nWX_LDFLAGS=`/usr/local/bin/wx-config --libs`\n\n# Generate the xcode config file\nWX_XCCONFIG=\"wx.xcconfig\"\necho \"// Configure wxWidgets. Auto Generated\" > $WX_XCCONFIG\necho \"WX_CFLAGS = $WX_CFLAGS\" >> $WX_XCCONFIG\necho \"WX_LDFLAGS = $WX_LDFLAGS\" >> $WX_XCCONFIG";
+			shellScript = "# c flags\nWX_CFLAGS=`/usr/local/bin/wx-config --debug=yes --cxxflags`\n# ld flags\nWX_LDFLAGS=`/usr/local/bin/wx-config --debug=yes --libs base core stc`\n\n# Generate the xcode config file\nWX_XCCONFIG=\"wx.xcconfig\"\necho \"// Configure wxWidgets. Auto Generated\" > $WX_XCCONFIG\necho \"WX_CFLAGS = $WX_CFLAGS\" >> $WX_XCCONFIG\necho \"WX_LDFLAGS = $WX_LDFLAGS\" >> $WX_XCCONFIG";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -182,6 +310,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3685502217E3C2C5002EB0C5 /* LexFreeBasic.cpp in Sources */,
 				36C4880617E0FDE500906651 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -259,7 +388,7 @@
 		};
 		36C4880017E0FCD400906651 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 36C4880817E0FF8400906651 /* wx.xcconfig */;
+			baseConfigurationReference = 3631570317E2831800F23D8A /* base.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -269,8 +398,12 @@
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"$(WX_CFLAGS)",
+					"$(FBIDE_CXXFLAGS)",
 				);
-				OTHER_LDFLAGS = "$(WX_LDFLAGS)";
+				OTHER_LDFLAGS = (
+					"$(WX_LDFLAGS)",
+					"$(FBIDE_LDFLAGS)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -278,7 +411,7 @@
 		};
 		36C4880117E0FCD400906651 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 36C4880817E0FF8400906651 /* wx.xcconfig */;
+			baseConfigurationReference = 3631570317E2831800F23D8A /* base.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -288,8 +421,12 @@
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"$(WX_CFLAGS)",
+					"$(FBIDE_CXXFLAGS)",
 				);
-				OTHER_LDFLAGS = "$(WX_LDFLAGS)";
+				OTHER_LDFLAGS = (
+					"$(WX_LDFLAGS)",
+					"$(FBIDE_LDFLAGS)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -314,6 +451,7 @@
 				36C4880117E0FCD400906651 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
