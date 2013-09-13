@@ -21,11 +21,11 @@
  * Describe keyword list
  */
 static const char * const freebasicWordListDesc[] = {
-	"FreeBasic Keywords",
-	"FreeBasic PreProcessor Keywords",
-	"user defined 1",
-	"user defined 2",
-	0
+    "FreeBasic Keywords",
+    "FreeBasic PreProcessor Keywords",
+    "user defined 1",
+    "user defined 2",
+    nullptr
 };
 
 
@@ -73,26 +73,26 @@ void * LexerFreeBasic::PrivateCall(int, void *)
 void LexerFreeBasic::Lex(unsigned int startPos, int length, int initStyle, IDocument *pAccess)
 {
     // the accessor
-	LexAccessor styler(pAccess);
+    LexAccessor styler(pAccess);
     
     // start at
-	styler.StartAt(startPos);
+    styler.StartAt(startPos);
     
     // context
-	StyleContext sc(startPos, length, initStyle, styler);
+    StyleContext sc(startPos, length, initStyle, styler);
 
-	// Can't use sc.More() here else we miss the last character
-	for (; ; sc.Forward()) {
+    // Can't use sc.More() here else we miss the last character
+    for (; ; sc.Forward()) {
         
         // set defaulr
         sc.SetState(SCE_B_DEFAULT);
         
         // break when done
-		if (!sc.More()) break;
-	}
+        if (!sc.More()) break;
+    }
     
     // done
-	sc.Complete();
+    sc.Complete();
 }
 
 
@@ -101,5 +101,5 @@ void LexerFreeBasic::Lex(unsigned int startPos, int length, int initStyle, IDocu
  */
 void LexerFreeBasic::Fold(unsigned int startPos, int length, int /* initStyle */, IDocument *pAccess)
 {
-	return;
+    return;
 }

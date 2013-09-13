@@ -24,59 +24,59 @@ struct LexerFreeBasic : ILexer
     /**
      * Create new instance
      */
-	static ILexer * Create();
+    static ILexer * Create();
     
     /**
      * Destroy this lexer
      */
-	void Release();
+    void Release();
     
     /**
      * Create new instance of the lexer
      */
-	LexerFreeBasic() {}
+    LexerFreeBasic() {}
     
     /**
      * Destroy the lexer
      */
-	virtual ~LexerFreeBasic() {}
+    virtual ~LexerFreeBasic() {}
 
     /**
      * Get lexer? version
      */
-	int Version() const
+    int Version() const
     {
-		return -1;
-	}
+        return -1;
+    }
     
     /**
      * Get property names
      */
-	const char * PropertyNames()
+    const char * PropertyNames()
     {
-		return nullptr;
-	}
+        return nullptr;
+    }
     
     /**
      * Get property type
      */
-	int PropertyType(const char *name)
+    int PropertyType(const char *name)
     {
-		return -1;
-	}
+        return -1;
+    }
     
     /**
      * Describe proprty
      */
-	const char * DescribeProperty(const char *name)
+    const char * DescribeProperty(const char *name)
     {
-		return nullptr;
-	}
+        return nullptr;
+    }
     
     /**
      * Set property
      */
-	int PropertySet(const char *key, const char *val)
+    int PropertySet(const char *key, const char *val)
     {
         return 0;
     }
@@ -84,15 +84,15 @@ struct LexerFreeBasic : ILexer
     /**
      * Describe keywords list
      */
-	const char * DescribeWordListSets()
+    const char * DescribeWordListSets()
     {
-		return nullptr;
-	}
+        return nullptr;
+    }
     
     /**
      * ?
      */
-	int WordListSet(int n, const char *wl)
+    int WordListSet(int n, const char *wl)
     {
         return 0;
     }
@@ -100,16 +100,16 @@ struct LexerFreeBasic : ILexer
     /**
      * Lex
      */
-	void Lex(unsigned int startPos, int length, int initStyle, IDocument *pAccess);
+    void Lex(unsigned int startPos, int length, int initStyle, IDocument *pAccess);
     
     /**
      * Fold
      */
-	void Fold(unsigned int startPos, int length, int initStyle, IDocument *pAccess);
+    void Fold(unsigned int startPos, int length, int initStyle, IDocument *pAccess);
     
     /**
      * Communicate with lexer from outside
      */
-	void * PrivateCall(int, void *);
+    void * PrivateCall(int, void *);
     
 };
