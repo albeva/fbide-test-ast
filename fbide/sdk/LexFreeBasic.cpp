@@ -21,10 +21,7 @@
  * Describe keyword list
  */
 static const char * const freebasicWordListDesc[] = {
-    "FreeBasic Keywords",
-    "FreeBasic PreProcessor Keywords",
-    "user defined 1",
-    "user defined 2",
+    "Keywords",
     nullptr
 };
 
@@ -62,8 +59,17 @@ void LexerFreeBasic::Release()
  */
 void * LexerFreeBasic::PrivateCall(int, void *)
 {
-    std::cout << __PRETTY_FUNCTION__ << '\n';
     return nullptr;
+}
+
+
+/**
+ * Set keywords
+ */
+int LexerFreeBasic::WordListSet(int n, const char *wl)
+{
+    m_keywords.Set(wl);
+    return 0;
 }
 
 
@@ -84,8 +90,31 @@ void LexerFreeBasic::Lex(unsigned int startPos, int length, int initStyle, IDocu
     // Can't use sc.More() here else we miss the last character
     for (; ; sc.Forward()) {
         
-        // set defaulr
-        sc.SetState(SCE_B_DEFAULT);
+        // current state
+        if (sc.state == Style::Number) {
+            if (!std::isdigit(sc.ch)) {
+                sc.SetState(Style::Default);
+            }
+        } else if (sc.state == Style::Identifier) {
+            if (!std::isalnum(sc.ch)) {
+                char buffer[32];
+                sc.GetCurrentLowered(buffer, sizeof(buffer));
+                if (m_keywords.InList(buffer)) {
+                    sc.ChangeState(Style::Keyword);
+                }
+                sc.SetState(Style::Default);
+            }
+        }
+        
+        // deice what to do
+        if (sc.state == Style::Default) {
+            // is this a digit ?
+            if (std::isdigit(sc.ch)) {
+                sc.SetState(Style::Number);
+            } else if (std::isalpha(sc.ch)) {
+                sc.SetState(Style::Identifier);
+            }
+        }
         
         // break when done
         if (!sc.More()) break;
@@ -103,3 +132,26 @@ void LexerFreeBasic::Fold(unsigned int startPos, int length, int /* initStyle */
 {
     return;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

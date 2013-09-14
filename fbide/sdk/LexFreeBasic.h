@@ -9,6 +9,7 @@
 #include "scintilla/ILexer.h"
 #include "scintilla/Scintilla.h"
 #include "scintilla/SciLexer.h"
+#include "scintilla/WordList.h"
 
 
 /**
@@ -16,6 +17,20 @@
  */
 struct LexerFreeBasic : ILexer
 {
+    
+    /**
+     * Style constants
+     */
+    struct Style { enum {
+        Default,
+        Identifier,
+        Keyword,
+        Operator,
+        Number,
+        String
+    }; };
+    
+    
     /**
      * Register the lexer with the scintilla
      */
@@ -90,12 +105,9 @@ struct LexerFreeBasic : ILexer
     }
     
     /**
-     * ?
+     * Set keywords
      */
-    int WordListSet(int n, const char *wl)
-    {
-        return 0;
-    }
+    int WordListSet(int n, const char *wl);
     
     /**
      * Lex
@@ -112,4 +124,10 @@ struct LexerFreeBasic : ILexer
      */
     void * PrivateCall(int, void *);
     
+private:
+    
+    /**
+     * word list
+     */
+    WordList m_keywords;
 };

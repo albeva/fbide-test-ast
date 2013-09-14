@@ -1,14 +1,35 @@
 Goal 1:
 
 (* the program *)
-Program             = { Statement EndOfLine } .
+Program             = { DeclOrStmtList } .
+
+(* list of statements or declarations *)
+DeclOrStmtList      = DeclOrStmt { DeclOrStmt } .
+
+(* Declaration or a Statement *)
+DeclOrStmt          = Declaration
+                    | Statement
+                    .
+
+(* function / variable declaration *)
+Declaration         = ( FunctionDeclaration
+                      | Function
+                      ) EndOfStmt
+                    .
+
+(* List of statements *)
+StatementList       = Statement { Statement } .
 
 (* statement *)
-Statement           = VariableDeclaration
-                    | FunctionDeclaration
-                    | Expression
-                    | Assignment
+Statement           = ( VariableDeclaration
+                      | Expression
+                      | Assignment
+                      ) EndOfStmt
                     .
+
+(* End of the statement *)
+EndOfStmt           = "\n" | ":" | eof .
+
 
 (* Variable declaration *)
 VariableDeclaration = "DIM" id "AS" TypeExpression [ "=" Expression ] .
@@ -30,6 +51,8 @@ TypeExpression      = "INTEGER"
 (* Expression *)
 Expression          = FunctionCall
                     | id
+                    | string-literal
+                    | integer-literal
                     .
 
 (* function call *)
@@ -40,3 +63,8 @@ FunctionArgumentList= Expression { "," Expression } .
 
 (* Assignment *)
 Assignment          = id "=" Expression .
+
+(* Function implementation *)
+Function            = "FUNCTION" id "(" [ ArgumentDeclList ] ")" "AS" TypeExpression EndOfStmt
+                      [ StatementList ]
+                      "END" "FUNCTION" .

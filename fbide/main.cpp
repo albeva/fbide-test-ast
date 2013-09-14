@@ -10,6 +10,7 @@
 #include <wx/stc/stc.h>
 #include "sdk/LexFreeBasic.h"
 
+
 /**
  * The FBIde App class. This is where application
  * starts and ends its lifetime
@@ -28,14 +29,20 @@ class FBIdeApp: public wxApp
         m_frame = new wxFrame(nullptr, wxID_ANY, "FBIde");
         
         // wxStyledTextCtrl
-        auto stc = new wxStyledTextCtrl(m_frame, wxID_ANY);
-        stc->SetLexer(5000);
+        m_stc = new wxStyledTextCtrl(m_frame, wxID_ANY);
+        m_stc->SetLexer(5000);
         
-        // set some basic styles
-        stc->StyleSetForeground(wxSTC_B_DEFAULT, wxColour("black"));
-        stc->StyleSetFontAttr(wxSTC_B_DEFAULT, 16, "Monaco", false, false, false);
-        stc->PrivateLexerCall(0, nullptr);
+        // default
+        setStyle(LexerFreeBasic::Style::Default,    "black");
+        setStyle(LexerFreeBasic::Style::Identifier, "black");
         
+        // number
+        setStyle(LexerFreeBasic::Style::Number, "blue");
+        
+        // keywords
+        setStyle(LexerFreeBasic::Style::Keyword, "black", true);
+        m_stc->SetKeyWords(0, "dim as string integer declare function end"); // end+function
+
         // show
         m_frame->Show();
         
@@ -43,8 +50,22 @@ class FBIdeApp: public wxApp
         return true;
     }
     
+    
+    /**
+     * Set style
+     */
+    void setStyle(int style, std::string color, bool bold = false, bool italic = false)
+    {
+        m_stc->StyleSetForeground(style, wxColour(color));
+        m_stc->StyleSetFontAttr(style, 16, "Consolas", bold, italic, false);
+    }
+    
+    
     // main window
     wxFrame * m_frame;
+    
+    // the editor
+    wxStyledTextCtrl * m_stc;
 };
 
 IMPLEMENT_APP(FBIdeApp)
