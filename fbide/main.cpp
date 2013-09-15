@@ -8,7 +8,7 @@
 
 #include <iostream>
 #include <wx/stc/stc.h>
-#include "sdk/LexFreeBasic.h"
+#include "SciFBLexer.h"
 
 
 /**
@@ -23,7 +23,7 @@ class FBIdeApp: public wxApp
     virtual bool OnInit()
     {
         // register the lexer
-        LexerFreeBasic::registerLexer();
+        SciFBLexer::registerLexer();
         
         // create the window
         m_frame = new wxFrame(nullptr, wxID_ANY, "FBIde");
@@ -33,15 +33,21 @@ class FBIdeApp: public wxApp
         m_stc->SetLexer(5000);
         
         // default
-        setStyle(LexerFreeBasic::Style::Default,    "black");
-        setStyle(LexerFreeBasic::Style::Identifier, "black");
+        setStyle(SciFBLexer::Style::Default,    "black");
+        setStyle(SciFBLexer::Style::Identifier, "black");
         
         // number
-        setStyle(LexerFreeBasic::Style::Number, "blue");
+        setStyle(SciFBLexer::Style::Number, "blue");
         
         // keywords
-        setStyle(LexerFreeBasic::Style::Keyword, "black", true);
+        setStyle(SciFBLexer::Style::Keyword, "black", true);
         m_stc->SetKeyWords(0, "dim as string integer declare function end"); // end+function
+        
+        // string
+        setStyle(SciFBLexer::Style::String, "red");
+        
+        // operator
+        setStyle(SciFBLexer::Style::Operator, "purple");
 
         // show
         m_frame->Show();

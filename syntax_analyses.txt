@@ -1,0 +1,35 @@
+Goals:
+- build & analyze AST on the fly as user types in the source code
+- provide code completition
+  * functions
+  * variables
+  * arguments
+  * keywords
+- provide errors & warnings
+  * wrong type
+  * wrong number of arguments
+  * undeclared function
+  * undeclared variable
+
+Hurdles:
+- scintilla lexer only receives input characters
+- scintilla lexes entire lines at once
+- scintilla re-lexes the source following a modification
+- text cut, paste are handled outside.
+- need to bridge subclass of wxStyledTextCtrl & LexerFreeBasic
+- lexing must be possible independently without invoking scintilla
+  * include files
+  * related files in the project
+  * caching
+
+Need:
+- modifiable AST
+- ast nodes are fault tolerant - can be in incomplete/invalid state
+- apply error state only after new line ?
+- ast nodes preserve position and case
+- easy to move ast around
+- line lookup cache
+- symbol table
+- scope aweness - to provide proper completition list
+
+

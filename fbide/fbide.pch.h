@@ -9,3 +9,8 @@
 
 // include wxWidgets
 #include "wx/wx.h"
+#include <memory>
+#include <vector>
+#include <map>
+#include <algorithm>
+#include <iostream>

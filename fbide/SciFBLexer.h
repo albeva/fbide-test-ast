@@ -6,17 +6,23 @@
 //  Copyright (c) 2013 Albert Varaksin. All rights reserved.
 //
 #pragma once
+
 #include "scintilla/ILexer.h"
 #include "scintilla/Scintilla.h"
 #include "scintilla/SciLexer.h"
 #include "scintilla/WordList.h"
 
 
+// declare classes
+class SourceContext;
+
+
 /**
  * Lex freebasic source
  */
-struct LexerFreeBasic : ILexer
+struct SciFBLexer : ILexer
 {
+    
     
     /**
      * Style constants
@@ -49,12 +55,12 @@ struct LexerFreeBasic : ILexer
     /**
      * Create new instance of the lexer
      */
-    LexerFreeBasic() {}
+    SciFBLexer();
     
     /**
      * Destroy the lexer
      */
-    virtual ~LexerFreeBasic() {}
+    virtual ~SciFBLexer() = default;
 
     /**
      * Get lexer? version
@@ -130,4 +136,9 @@ private:
      * word list
      */
     WordList m_keywords;
+    
+    /**
+     * source context
+     */
+    std::shared_ptr<SourceContext> m_srcCtx;
 };

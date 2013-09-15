@@ -5,4 +5,4 @@
 //
 
 // include the default pch
-#include "sdk/fbide.pch.h"
+#include "fbide.pch.h"
