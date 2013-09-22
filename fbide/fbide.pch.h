@@ -8,7 +8,7 @@
 #pragma once
 
 // include wxWidgets
-#include "wx/wx.h"
+#include <wx/wx.h>
 #include <memory>
 #include <vector>
 #include <map>

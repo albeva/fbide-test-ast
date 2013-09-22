@@ -7,8 +7,7 @@
 //
 
 #include <iostream>
-#include <wx/stc/stc.h>
-#include "SciFBLexer.h"
+#include "FbEditor.h"
 
 
 /**
@@ -21,49 +20,18 @@ class FBIdeApp: public wxApp
      * App is about to start
      */
     virtual bool OnInit()
-    {
-        // register the lexer
-        SciFBLexer::registerLexer();
-        
+    {   
         // create the window
         m_frame = new wxFrame(nullptr, wxID_ANY, "FBIde");
         
         // wxStyledTextCtrl
-        m_stc = new wxStyledTextCtrl(m_frame, wxID_ANY);
-        m_stc->SetLexer(5000);
-        
-        // default
-        setStyle(SciFBLexer::Style::Default,    "black");
-        setStyle(SciFBLexer::Style::Identifier, "black");
-        
-        // number
-        setStyle(SciFBLexer::Style::Number, "blue");
-        
-        // keywords
-        setStyle(SciFBLexer::Style::Keyword, "black", true);
-        m_stc->SetKeyWords(0, "dim as string integer declare function end"); // end+function
-        
-        // string
-        setStyle(SciFBLexer::Style::String, "red");
-        
-        // operator
-        setStyle(SciFBLexer::Style::Operator, "purple");
+        new FbEditor(m_frame, wxID_ANY);
 
         // show
         m_frame->Show();
         
         // all ok
         return true;
-    }
-    
-    
-    /**
-     * Set style
-     */
-    void setStyle(int style, std::string color, bool bold = false, bool italic = false)
-    {
-        m_stc->StyleSetForeground(style, wxColour(color));
-        m_stc->StyleSetFontAttr(style, 16, "Consolas", bold, italic, false);
     }
     
     

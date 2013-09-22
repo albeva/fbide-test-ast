@@ -11,6 +11,7 @@
  * Abstract syntax tree node
  */
 class Ast;
+class Token;
 
 
 /**
@@ -37,14 +38,20 @@ public:
      */
     const char * getBuffer() const { return m_buffer; }
     
-    
     /**
      * Run the internal analyses machinery and return
      * the first suitable ast node for that line
      * or null. Ast node return must not be
      * deleted or modified.
      */
-    const Ast * analyze(int line, unsigned int offset, int length);
+    std::shared_ptr<Token> analyze(int line, int offset, int length);
+    
+    /**
+     * Get first token that is at the start of the line
+     *
+     * if last > line then find a first token between the given range
+     */
+    std::shared_ptr<Token> getLine(int line, int last = INT_MAX);
     
 private:
     
@@ -52,4 +59,12 @@ private:
      * input source
      */
     const char * m_buffer;
+    
+    /**
+     * root token
+     */
+    std::shared_ptr<Token> m_root;
 };
+
+
+
