@@ -52,6 +52,7 @@ Lexer::Lexer(const char * input)
   m_ch(0),
   m_next(0),
   m_loc(),
+  m_tokenStart(input),
   m_hasStmt(false),
   m_readOk(false)
 {
@@ -124,8 +125,15 @@ TokenPtr Lexer::next()
         }
         
         // there is something here
-        m_hasStmt = true;
-        m_tokenLoc = m_loc;
+        m_hasStmt    = true;
+        m_tokenLoc   = m_loc;
+        m_tokenStart = m_input;
+        
+        // single line comment ?
+        if (m_ch == '\'') {
+            while (readNext() && m_ch != '\n');
+            return token(TokenKind::Comment);
+        }
         
         // possible identifier?
         if (std::isalpha(m_ch)) return identifier();
@@ -190,12 +198,11 @@ TokenPtr Lexer::string()
 TokenPtr Lexer::identifier()
 {
     // iterate input while there is a number or a letter
-    auto start = m_input;
     while (readNext() && std::isalnum(m_ch));
     
     // get uppercased lexeme
     std::string lexeme;
-    std::transform(start, m_input, std::back_inserter(lexeme), ::toupper);
+    std::transform(m_tokenStart, m_input, std::back_inserter(lexeme), ::toupper);
     
     // is this a keyword?
     auto iter = _keywords.find(lexeme);
@@ -208,6 +215,43 @@ TokenPtr Lexer::identifier()
  */
 TokenPtr Lexer::token(TokenKind kind, std::string lexeme)
 {
-    m_tokenLoc.length = m_loc.col - m_tokenLoc.col;
+    m_tokenLoc.length = (int)(m_input - m_tokenStart);
     return Token::create(kind, m_tokenLoc, lexeme);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

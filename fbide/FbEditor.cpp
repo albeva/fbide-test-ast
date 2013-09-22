@@ -27,8 +27,8 @@ static const TokenStyle _tokenStyles[] = {
  * Event table for the editor
  */
 BEGIN_EVENT_TABLE (FbEditor, wxStyledTextCtrl)
-    EVT_STC_MODIFIED(wxID_ANY,      FbEditor::onModified)
-    EVT_STC_STYLENEEDED(wxID_ANY,   FbEditor::onStyleNeeded)
+    EVT_STC_MODIFIED    ( wxID_ANY, FbEditor::onModified    )
+    EVT_STC_STYLENEEDED ( wxID_ANY, FbEditor::onStyleNeeded )
 END_EVENT_TABLE()
 
 
@@ -50,6 +50,7 @@ FbEditor::FbEditor(wxWindow *parent, wxWindowID id) : wxStyledTextCtrl(parent, i
     setStyle(TokenStyle::Keyword,      "maroon", true);
     setStyle(TokenStyle::String,       "red");
     setStyle(TokenStyle::Operator,     "purple");
+    setStyle(TokenStyle::Comment,      "gray", false, true);
 }
 
 

@@ -83,6 +83,11 @@ private:
      */
     TokenLoc m_tokenLoc;
     
+    /**
+     * Token start character position
+     */
+    const char * m_tokenStart;
+    
     
     /**
      * line has a possible statement

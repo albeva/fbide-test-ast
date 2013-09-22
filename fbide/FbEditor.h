@@ -21,7 +21,8 @@ enum class TokenStyle
     Keyword,
     Operator,
     Number,
-    String
+    String,
+    Comment
 };
 
 
