@@ -52,11 +52,13 @@ std::string Token::toString()
     std::string out;
     
     out += _tokenNames[(int)m_kind];;
-    out += " {" + std::to_string(getLine())
-         + ", " + std::to_string(getCol())
-         + ", " + std::to_string(getLength())
-         + "} ";
-    out += m_lexeme;
+    out += " {\n\tline:    " + std::to_string(getLine())
+         +   "\n\tcol:     " + std::to_string(getCol())
+         +   "\n\tlen:     " + std::to_string(getLength())
+         +   "\n\tendLine: " + std::to_string(getEndLine())
+         +   "\n\tendCol:  " + std::to_string(getEndCol())
+         +   "\n\tlexeme:  " + m_lexeme
+         + "\n}";
     
     return out;
 }

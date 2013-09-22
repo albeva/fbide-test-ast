@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 Albert Varaksin. All rights reserved.
 //
 #pragma once
-#include <wx/stc/stc.h>
+#include "Token.h"
 
 class SourceContext;
-
+class Token;
 
 /**
  * Token styles that are used for colorizing
@@ -40,7 +40,17 @@ public:
     /**
      * set simple style
      */
-    void setStyle(TokenStyle style, std::string color, bool bold = false, bool italic = false);
+    void setStyle(TokenStyle style, std::string color, bool bold = false, bool italic = false, std::string bgcolor = "");
+    
+    /**
+     * Style text based on the token for the length given
+     */
+    inline void style(int length, TokenPtr token);
+    
+    /**
+     * Style text with given style ID
+     */
+    inline void style(int length, TokenStyle style);
     
     /**
      * source is modified

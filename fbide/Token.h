@@ -35,16 +35,29 @@ enum class TokenKind
  */
 struct TokenLoc
 {
+    
+    /**
+     * Default construct
+     */
+    TokenLoc() = default;
+    
     /**
      * Create location
      */
-    TokenLoc(int line = 0, int col = 0, int length = 0)
-    : line(line), col(col), length(length)
+    TokenLoc(int line, int col, int length, int endLine = -1, int endCol = -1)
+    : line(line),
+      col(col),
+      length(length),
+      endLine(endLine == -1 ? line : endLine),
+      endCol(endCol == -1 ? col : endCol)
     {}
     
-    int line;
-    int col;
-    int length;
+    // members
+    int line        = 0;
+    int col         = 0;
+    int length      = 0;
+    int endLine     = 0;
+    int endCol      = 0;
 };
 
 
@@ -83,11 +96,21 @@ struct Token
      */
     inline int getLine() const { return m_loc.line; }
     
+    /**
+     * get line where token ends
+     */
+    inline int getEndLine() const { return m_loc.endLine; }
+    
     
     /**
      * Get token offset column in the line
      */
     inline int getCol() const { return m_loc.col; }
+    
+    /**
+     * get end column of the token
+     */
+    inline int getEndCol() const { return m_loc.endCol; }
     
     
     /**

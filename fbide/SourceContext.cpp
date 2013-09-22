@@ -40,6 +40,7 @@ std::shared_ptr<Token> SourceContext::analyze(int line, int offset, int length)
     std::shared_ptr<Token> token;
     do {
         auto t = lexer.next();
+        if (t->getKind() == TokenKind::EndOfFile) break;
         if (!m_root) m_root = t;
         if (token) token->setNext(t);
         token = t;
@@ -64,10 +65,30 @@ std::shared_ptr<Token> SourceContext::getLine(int line, int last)
             if (l <= last) return token;
             return nullptr;
         }
+        if (token->getEndLine() >= line) return token;
         token = token->getNext();
     }
     return nullptr;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

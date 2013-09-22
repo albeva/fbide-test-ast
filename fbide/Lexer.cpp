@@ -51,7 +51,7 @@ Lexer::Lexer(const char * input)
 : m_input(input),
   m_ch(0),
   m_next(0),
-  m_loc(),
+  m_loc(0, -1, 0),
   m_tokenStart(input),
   m_hasStmt(false),
   m_readOk(false)
@@ -69,7 +69,7 @@ bool Lexer::read()
         // line ending?
         if (m_ch == '\n') {
             m_loc.line++;
-            m_loc.col = 1;
+            m_loc.col = 0;
         } else {
             m_loc.col++;
         }
@@ -114,24 +114,40 @@ TokenPtr Lexer::next()
             if (m_ch == '\0') break;
         }
         
+        // mark token location
+        m_tokenLoc = m_loc;
+        
         // is line end
         if (m_ch == '\n') {
             readNext();
-            if (m_hasStmt) {
-                m_hasStmt = false;
-                return token(TokenKind::EndOfLine);
-            }
-            continue;
+            m_hasStmt = false;
+            return token(TokenKind::EndOfLine);
         }
         
         // there is something here
         m_hasStmt    = true;
-        m_tokenLoc   = m_loc;
         m_tokenStart = m_input;
         
         // single line comment ?
         if (m_ch == '\'') {
             while (readNext() && m_ch != '\n');
+            return token(TokenKind::Comment);
+        }
+        
+        // multiline comment
+        if (m_ch == '/' && m_next == '\'') {
+            readNext();
+            int level = 1;
+            while (readNext() && level > 0) {
+                if (m_ch == '\'' && m_next == '/') {
+                    readNext();
+                    level--;
+                } else if (m_ch == '/' && m_next == '\'') {
+                    readNext();
+                    level++;
+                }
+            }
+            if (m_ch == '/') readNext();
             return token(TokenKind::Comment);
         }
         
@@ -215,7 +231,11 @@ TokenPtr Lexer::identifier()
  */
 TokenPtr Lexer::token(TokenKind kind, std::string lexeme)
 {
-    m_tokenLoc.length = (int)(m_input - m_tokenStart);
+    if (kind != TokenKind::EndOfLine) {
+        m_tokenLoc.length  = (int)(m_input - m_tokenStart);
+        m_tokenLoc.endLine = m_loc.line;
+        m_tokenLoc.endCol  = m_loc.col;
+    }
     return Token::create(kind, m_tokenLoc, lexeme);
 }
 

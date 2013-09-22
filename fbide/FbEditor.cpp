@@ -47,9 +47,9 @@ FbEditor::FbEditor(wxWindow *parent, wxWindowID id) : wxStyledTextCtrl(parent, i
     setStyle(TokenStyle::Default,      "black");
     setStyle(TokenStyle::Identifier,   "black");
     setStyle(TokenStyle::Number,       "blue");
-    setStyle(TokenStyle::Keyword,      "maroon", true);
+    setStyle(TokenStyle::Keyword,      "purple", true);
     setStyle(TokenStyle::String,       "red");
-    setStyle(TokenStyle::Operator,     "purple");
+    setStyle(TokenStyle::Operator,     "brown", true);
     setStyle(TokenStyle::Comment,      "gray", false, true);
 }
 
@@ -58,10 +58,15 @@ FbEditor::FbEditor(wxWindow *parent, wxWindowID id) : wxStyledTextCtrl(parent, i
 /**
  * Set style
  */
-void FbEditor::setStyle(TokenStyle style, std::string color, bool bold, bool italic)
+void FbEditor::setStyle(TokenStyle style, std::string color, bool bold, bool italic, std::string bgcolor)
 {
     StyleSetForeground((int)style, wxColour(color));
     StyleSetFontAttr((int)style, 16, "Consolas", bold, italic, false);
+    
+    if (bgcolor != "") {
+        StyleSetBackground((int)style, wxColour(bgcolor));
+        StyleSetEOLFilled((int)style, true);
+    }
 }
 
 
@@ -98,56 +103,107 @@ void FbEditor::onStyleNeeded(wxStyledTextEvent & event)
     startPos      = PositionFromLine(startLine);
     // end position
     int lastPos   = event.GetPosition();
-    int lastLine  = LineFromPosition(lastPos);
-    
+    int lastLine  = std::max(LineFromPosition(lastPos), GetFirstVisibleLine() + LinesOnScreen());
+        
     // get token
     auto token = m_srcCtx->getLine(startLine, lastLine);
     
+    // set stylling position
+    StartStyling(startPos, INT_MAX);
+    
+    // no token? just colour to default
     if (!token) {
-        StartStyling(startPos, INT_MAX);
         SetStyling(lastPos - startPos, (int)TokenStyle::Default);
         return;
     }
     
-    // go through the lines
-    for (int line = startLine; line <= lastLine; line++) {
-        StartStyling(PositionFromLine(line), INT_MAX);
-
-        int col = 0;
-        int length = GetLineLength(line);
-
-        while (token != nullptr
-               && token->getLine() == line
-               && token->getKind() != TokenKind::EndOfFile) {
-            
-            // skip end of line token
-            if (token->getKind() == TokenKind::EndOfLine) {
-                token = token->getNext();
-                break;
-            }
-            
-            int p = token->getCol() - 1;
-            if (p > col) {
-                SetStyling(p - col, (int)TokenStyle::Default);
-            }
-            col = p;
-
-            SetStyling(token->getLength(), (int)_tokenStyles[(int)token->getKind()]);
-            col += token->getLength();
-
-            // next token
+    // style the tokens
+    int line = startLine;
+    int col  = 0;
+    while (token && line <= lastLine) {
+        // end of the line?
+        if (token->getKind() == TokenKind::EndOfLine) {
             token = token->getNext();
+            continue;
         }
         
-        // colorize rest of the line
-        if (col < length) {
-            SetStyling(length - col, (int)TokenStyle::Default);
+        // token line
+        int tline = token->getLine();
+        
+        // token started before current line
+        if (line > tline) {
+            int start = PositionFromLine(line);
+            int end   = PositionFromLine(token->getEndLine()) + token->getEndCol();
+            style(end - start, token);
+            
+            // end on line and column
+            col  = token->getEndCol();
+            line = token->getEndLine();
+            
+            // get next token and continue
+            token = token->getNext();
+            continue;
         }
+        
+        // empty lines before next token?
+        if (line < tline) {
+            int start = PositionFromLine(line) + col;
+            int end   = PositionFromLine(tline) + token->getCol();
+            style(end - start, TokenStyle::Default);
+            
+            // end on line and column
+            line = token->getLine();
+            col = token->getCol();
+            continue;
+        }
+        
+        // started on the current line
+        if (line == tline) {
+            // empty space ?
+            if (token->getCol() > col) {
+                style(token->getCol() - col, TokenStyle::Default);
+            }
+            
+            // style the token
+            style(token->getLength(), token);
+            col = token->getEndCol();
+            line = token->getEndLine();
+            
+            // advance to the next one
+            token = token->getNext();
+            continue;
+        }
+        
+        // some empty space till end of the line
+        int length = GetLineLength(line);
+        if (col < length) {
+            style(length - col, TokenStyle::Default);
+        }
+        
+        // incement line
+        line++;
+        col = 0;
     }
 }
 
 
 
+/**
+ * Style text based on the token for the length given
+ */
+void FbEditor::style(int length, TokenPtr token)
+{
+    style(length, _tokenStyles[(int)token->getKind()]);
+}
 
+
+
+/**
+ * Style text with given style ID
+ */
+void FbEditor::style(int length, TokenStyle style)
+{
+    SetStyling(length, (int)style);
+}
 
 

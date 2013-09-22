@@ -9,6 +9,7 @@
 
 // include wxWidgets
 #include <wx/wx.h>
+#include <wx/stc/stc.h>
 #include <memory>
 #include <vector>
 #include <map>
