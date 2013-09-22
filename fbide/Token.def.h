@@ -33,6 +33,7 @@
     _( DECLARE,         "DECLARE",          Keyword )       \
     _( END,             "END",              Keyword )
 
+// all tokens combined
 #define TOKEN_ALL(_)                                        \
     TOKEN_GENERIC(_)                                        \
     TOKEN_OPERATORS(_)                                      \

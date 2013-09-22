@@ -103,7 +103,7 @@ bool Lexer::readNext()
 /**
  * get next token from the stream
  */
-std::shared_ptr<Token> Lexer::next()
+TokenPtr Lexer::next()
 {
     while (read()) {
         
@@ -163,7 +163,7 @@ std::shared_ptr<Token> Lexer::next()
 /**
  * read number
  */
-std::shared_ptr<Token> Lexer::number()
+TokenPtr Lexer::number()
 {
     // iterate while character is a number
     while (readNext() && std::isdigit(m_ch));
@@ -175,7 +175,7 @@ std::shared_ptr<Token> Lexer::number()
 /**
  * read string
  */
-std::shared_ptr<Token> Lexer::string()
+TokenPtr Lexer::string()
 {
     while (readNext() && m_ch != '"' && m_ch != '\n');
     if (m_ch == '"') readNext();
@@ -187,7 +187,7 @@ std::shared_ptr<Token> Lexer::string()
 /**
  * Read identifier. Might be a keyword
  */
-std::shared_ptr<Token> Lexer::identifier()
+TokenPtr Lexer::identifier()
 {
     // iterate input while there is a number or a letter
     auto start = m_input;
@@ -206,7 +206,7 @@ std::shared_ptr<Token> Lexer::identifier()
 /**
  * create new token
  */
-std::shared_ptr<Token> Lexer::token(TokenKind kind, std::string lexeme)
+TokenPtr Lexer::token(TokenKind kind, std::string lexeme)
 {
     m_tokenLoc.length = m_loc.col - m_tokenLoc.col;
     return Token::create(kind, m_tokenLoc, lexeme);

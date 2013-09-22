@@ -9,13 +9,24 @@
 #include "Token.def.h"
 
 /**
+ * Forward ref
+ */
+class Token;
+
+/**
+ * Token access type
+ */
+typedef std::shared_ptr<Token> TokenPtr;
+
+
+/**
  * Token type
  */
 enum class TokenKind
 {
-    #define TOKEN_ENUM(_tkn, ...) _tkn,
-    TOKEN_ALL(TOKEN_ENUM)
-    #undef TOKEN_ENUM
+    #define _tkn_enums(_tkn, ...) _tkn,
+    TOKEN_ALL(_tkn_enums)
+    #undef _tkn_enums
 };
 
 
@@ -27,13 +38,12 @@ struct TokenLoc
     /**
      * Create location
      */
-    TokenLoc(int line = 0, int col = 0, int pos = 0, int length = 0)
-    : line(line), col(col), pos(pos), length(length)
+    TokenLoc(int line = 0, int col = 0, int length = 0)
+    : line(line), col(col), length(length)
     {}
     
     int line;
     int col;
-    int pos;
     int length;
 };
 
@@ -45,15 +55,15 @@ struct Token
 {
     
     /**
-     * Create new token
+     * create pooled token object
      */
-    Token(TokenKind kind, const TokenLoc & loc, std::string lexeme = "");
+    static TokenPtr create(TokenKind kind, const TokenLoc & loc, std::string lexeme = "");
     
     
     /**
-     * create pooled token object
+     * Create new token
      */
-    static std::shared_ptr<Token> create(TokenKind kind, const TokenLoc & loc, std::string lexeme = "");
+    Token(TokenKind kind, const TokenLoc & loc, std::string lexeme = "");
     
     
     /**
@@ -61,6 +71,55 @@ struct Token
      */
     ~Token();
     
+    
+    /**
+     * Get token type
+     */
+    inline TokenKind getKind() const { return m_kind; }
+    
+    
+    /**
+     * Get token line
+     */
+    inline int getLine() const { return m_loc.line; }
+    
+    
+    /**
+     * Get token offset column in the line
+     */
+    inline int getCol() const { return m_loc.col; }
+    
+    
+    /**
+     * Get token length
+     */
+    inline int getLength() const { return m_loc.length; }
+    
+    
+    /**
+     * Get token lexeme
+     */
+    inline const std::string & getLexeme() const { return m_lexeme; }
+    
+    
+    /**
+     * Get next token
+     */
+    inline TokenPtr getNext() const { return m_next; }
+    
+    
+    /**
+     * Set the next token
+     */
+    inline void setNext(TokenPtr next) { m_next = next; }
+    
+    
+    /**
+     * print out token information
+     */
+    std::string toString();
+    
+private:
     
     /**
      * Token kind
@@ -80,10 +139,6 @@ struct Token
     /**
      * next token. Linked list
      */
-    std::shared_ptr<Token> m_next;
-    
-    /**
-     * print out token information
-     */
-    std::string toString();
+    TokenPtr m_next;
+
 };

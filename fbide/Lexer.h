@@ -24,29 +24,29 @@ public:
     /**
      * get next token from the stream
      */
-    std::shared_ptr<Token> next();
+    TokenPtr next();
     
 private:
     
     /**
      * read number
      */
-    std::shared_ptr<Token> number();
+    TokenPtr number();
     
     /**
      * read string
      */
-    std::shared_ptr<Token> string();
+    TokenPtr string();
     
     /**
      * Read identifier. Might be a keyword
      */
-    std::shared_ptr<Token> identifier();
+    TokenPtr identifier();
     
     /**
      * create new token
      */
-    std::shared_ptr<Token> token(TokenKind kind, std::string lexeme = "");
+    TokenPtr token(TokenKind kind, std::string lexeme = "");
     
     /**
      * Read in current character from the input.

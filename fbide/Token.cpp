@@ -11,9 +11,9 @@
 
 namespace {
     static const char * const _tokenNames[] = {
-        #define TOKEN_NAMES(_tkn, _str, ...) _str,
-        TOKEN_ALL(TOKEN_NAMES)
-        #undef TOKEN_NAMES
+        #define _tkn_names(_tkn, _str, ...) _str,
+        TOKEN_ALL(_tkn_names)
+        #undef _tkn_names
     };
 }
 
@@ -52,11 +52,10 @@ std::string Token::toString()
     std::string out;
     
     out += _tokenNames[(int)m_kind];;
-    out += " {";
-    out += std::to_string(m_loc.line)
-        + ", " + std::to_string(m_loc.col)
-        + ", " + std::to_string(m_loc.length);
-    out += "} ";
+    out += " {" + std::to_string(getLine())
+         + ", " + std::to_string(getCol())
+         + ", " + std::to_string(getLength())
+         + "} ";
     out += m_lexeme;
     
     return out;

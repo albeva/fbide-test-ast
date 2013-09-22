@@ -116,26 +116,26 @@ void FbEditor::onStyleNeeded(wxStyledTextEvent & event)
         int length = GetLineLength(line);
 
         while (token != nullptr
-               && token->m_loc.line == line
-               && token->m_kind != TokenKind::EndOfFile) {
+               && token->getLine() == line
+               && token->getKind() != TokenKind::EndOfFile) {
             
             // skip end of line token
-            if (token->m_kind == TokenKind::EndOfLine) {
-                token = token->m_next;
+            if (token->getKind() == TokenKind::EndOfLine) {
+                token = token->getNext();
                 break;
             }
             
-            int p = token->m_loc.col - 1;
+            int p = token->getCol() - 1;
             if (p > col) {
                 SetStyling(p - col, (int)TokenStyle::Default);
             }
             col = p;
 
-            SetStyling(token->m_loc.length, (int)_tokenStyles[(int)token->m_kind]);
-            col += token->m_loc.length;
+            SetStyling(token->getLength(), (int)_tokenStyles[(int)token->getKind()]);
+            col += token->getLength();
 
             // next token
-            token = token->m_next;
+            token = token->getNext();
         }
         
         // colorize rest of the line
