@@ -41,6 +41,23 @@ namespace {
     {
         return ch == ' ' || ch == '\t';
     }
+    
+    /**
+     * is char valid in identifier body?
+     */
+    static inline bool is_ident_body(char ch)
+    {
+        return std::isalnum(ch) || ch == '_';
+    }
+    
+    
+    /**
+     * is char valid at the beginning of the identifier ?
+     */
+    static inline bool is_ident_head(char ch)
+    {
+        return std::isalpha(ch) || ch == '_';
+    }
 }
 
 
@@ -152,7 +169,7 @@ TokenPtr Lexer::next()
         }
         
         // possible identifier?
-        if (std::isalpha(m_ch)) return identifier();
+        if (is_ident_head(m_ch)) return identifier();
         
         // possible number ?
         if (std::isdigit(m_ch)) return number();
@@ -180,7 +197,7 @@ TokenPtr Lexer::next()
     }
     
     // really the end
-    return token(TokenKind::EndOfFile);
+    return nullptr;
 }
 
 
@@ -214,7 +231,7 @@ TokenPtr Lexer::string()
 TokenPtr Lexer::identifier()
 {
     // iterate input while there is a number or a letter
-    while (readNext() && std::isalnum(m_ch));
+    while (readNext() && is_ident_body(m_ch));
     
     // get uppercased lexeme
     std::string lexeme;

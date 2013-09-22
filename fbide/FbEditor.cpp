@@ -29,6 +29,7 @@ static const TokenStyle _tokenStyles[] = {
 BEGIN_EVENT_TABLE (FbEditor, wxStyledTextCtrl)
     EVT_STC_MODIFIED    ( wxID_ANY, FbEditor::onModified    )
     EVT_STC_STYLENEEDED ( wxID_ANY, FbEditor::onStyleNeeded )
+    EVT_STC_CHARADDED   ( wxID_ANY, FbEditor::onCharAdded   )
 END_EVENT_TABLE()
 
 
@@ -42,6 +43,9 @@ FbEditor::FbEditor(wxWindow *parent, wxWindowID id) : wxStyledTextCtrl(parent, i
     
     // use container styling
     SetLexer(wxSTC_LEX_CONTAINER);
+    
+    // ingore case
+    AutoCompSetIgnoreCase(true);
     
     // default
     setStyle(TokenStyle::Default,      "black");
@@ -93,17 +97,46 @@ void FbEditor::onModified(wxStyledTextEvent & event)
 
 
 /**
+ * CHaracter added
+ */
+void FbEditor::onCharAdded(wxStyledTextEvent & event)
+{
+    int p = GetCurrentPos();
+    WordStartPosition(p, true);
+    auto w = GetTextRange(WordStartPosition(p, true), p);
+    if (w.length() < 2) return;
+
+    
+    w.UpperCase();
+    wxString words = "";
+    int count = 0;
+    for (auto id : m_srcCtx->getIdentifiers()) {
+        if (id.compare(0, w.length(), w) == 0) {
+            if (id.length() == w.length()) continue;
+            words += id + " ";
+            count++;
+        }
+    }
+    
+    if (count > 0) {
+        LOG_V(words);
+        AutoCompShow((int)w.Length(), words);
+    }
+}
+
+
+/**
  * Style needed
  */
 void FbEditor::onStyleNeeded(wxStyledTextEvent & event)
 {
     // startint position
-    auto startPos = GetEndStyled();
-    auto startLine= LineFromPosition(startPos);
-    startPos      = PositionFromLine(startLine);
+    auto startPos  = GetEndStyled();
+    auto startLine = LineFromPosition(startPos);
+    startPos       = PositionFromLine(startLine);
     // end position
-    int lastPos   = event.GetPosition();
-    int lastLine  = std::max(LineFromPosition(lastPos), GetFirstVisibleLine() + LinesOnScreen());
+    int lastPos    = event.GetPosition();
+    int lastLine   = std::max(LineFromPosition(lastPos), GetFirstVisibleLine() + LinesOnScreen());
         
     // get token
     auto token = m_srcCtx->getLine(startLine, lastLine);
@@ -113,7 +146,7 @@ void FbEditor::onStyleNeeded(wxStyledTextEvent & event)
     
     // no token? just colour to default
     if (!token) {
-        SetStyling(lastPos - startPos, (int)TokenStyle::Default);
+        style(lastPos - startPos, TokenStyle::Default);
         return;
     }
     

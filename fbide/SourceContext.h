@@ -44,7 +44,7 @@ public:
      * or null. Ast node return must not be
      * deleted or modified.
      */
-    std::shared_ptr<Token> analyze(int line, int offset, int length);
+    void analyze(int line, int offset, int length);
     
     /**
      * Get first token that is at the start of the line
@@ -52,6 +52,12 @@ public:
      * if last > line then find a first token between the given range
      */
     std::shared_ptr<Token> getLine(int line, int last = INT_MAX);
+    
+    
+    /**
+     * Get all available identifiers
+     */
+    const std::vector<std::string> & getIdentifiers() const;
     
 private:
     
@@ -64,6 +70,11 @@ private:
      * root token
      */
     std::shared_ptr<Token> m_root;
+    
+    /**
+     * all identifiers
+     */
+    std::vector<std::string> m_identifiers;
 };
 
 

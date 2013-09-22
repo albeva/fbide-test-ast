@@ -25,30 +25,29 @@ SourceContext::SourceContext() : m_buffer(nullptr)
  * or null. Ast node return must not be
  * deleted or modified.
  */
-std::shared_ptr<Token> SourceContext::analyze(int line, int offset, int length)
+void SourceContext::analyze(int line, int offset, int length)
 {
     // create the lexer
     Lexer lexer(this->getBuffer());
     
     // reset current token tree
     m_root = nullptr;
-    
-    // out token
-    std::shared_ptr<Token> out;
+    m_identifiers.clear();
     
     // tokens
-    std::shared_ptr<Token> token;
-    do {
-        auto t = lexer.next();
-        if (t->getKind() == TokenKind::EndOfFile) break;
-        if (!m_root) m_root = t;
-        if (token) token->setNext(t);
-        token = t;
-        if (!out && token->getLine() == line) out = token;
-    } while (token->getKind() != TokenKind::EndOfFile);
+    std::shared_ptr<Token> token, tmp;
+    while ((tmp = lexer.next())) {
+        if (!m_root) m_root = tmp;
+        if (token) token->setNext(tmp);
+        if (tmp->getKind() == TokenKind::Identifier) {
+            m_identifiers.push_back(tmp->getLexeme());
+        }
+        token = tmp;
+    };
     
-    // done
-    return out;
+    // sort
+    std::unique(m_identifiers.begin(), m_identifiers.end());
+    std::sort(m_identifiers.begin(), m_identifiers.end());
 }
 
 
@@ -70,6 +69,33 @@ std::shared_ptr<Token> SourceContext::getLine(int line, int last)
     }
     return nullptr;
 }
+
+
+/**
+ * get available identifiers
+ */
+const std::vector<std::string> & SourceContext::getIdentifiers() const
+{
+    return m_identifiers;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

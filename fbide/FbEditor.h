@@ -37,6 +37,9 @@ public:
      */
     FbEditor(wxWindow *parent, wxWindowID);
     
+private:
+    
+    
     /**
      * set simple style
      */
@@ -62,7 +65,11 @@ public:
      */
     void onStyleNeeded(wxStyledTextEvent & event);
     
-private:
+    
+    /**
+     * CHaracter added
+     */
+    void onCharAdded(wxStyledTextEvent & event);
     
     std::shared_ptr<SourceContext> m_srcCtx;
     DECLARE_EVENT_TABLE();
