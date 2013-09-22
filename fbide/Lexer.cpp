@@ -209,6 +209,5 @@ std::shared_ptr<Token> Lexer::identifier()
 std::shared_ptr<Token> Lexer::token(TokenKind kind, std::string lexeme)
 {
     m_tokenLoc.length = m_loc.col - m_tokenLoc.col;
-    // return std::make_shared<Token>(kind, m_tokenLoc, lexeme);
     return Token::create(kind, m_tokenLoc, lexeme);
 }

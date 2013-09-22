@@ -7,8 +7,6 @@
 //
 
 #include "Token.h"
-#define BOOST_POOL_NO_MT
-#include <boost/pool/object_pool.hpp>
 
 
 namespace {
@@ -17,25 +15,15 @@ namespace {
         TOKEN_ALL(TOKEN_NAMES)
         #undef TOKEN_NAMES
     };
-    
-    // token allocator
-    boost::object_pool<Token> _allocator;
-    
-    // release
-    void destroy(Token * token)
-    {
-        _allocator.destroy(token);
-    }
 }
 
 
 /**
- * create pooled token object
+ * TODO: create & return a pooled token object.
  */
 std::shared_ptr<Token> Token::create(TokenKind kind, const TokenLoc & loc, std::string lexeme)
 {
-    // return std::allocate_shared<Token>(_allocator, kind, loc, lexeme);
-    return std::shared_ptr<Token>(_allocator.construct(kind, loc, lexeme), &destroy);
+    return std::make_shared<Token>(kind, loc, lexeme);
 }
 
 

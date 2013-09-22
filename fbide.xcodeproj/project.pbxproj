@@ -82,8 +82,8 @@
 				364D189317E778F100A7F3BE /* Lexer.cpp */,
 				364D189717E7790100A7F3BE /* Parser.h */,
 				364D189617E7790100A7F3BE /* Parser.cpp */,
-				36B1031417EDEB23004599DB /* Token.h */,
 				36B1031717EE19FD004599DB /* Token.def.h */,
+				36B1031417EDEB23004599DB /* Token.h */,
 				36B1031317EDEB23004599DB /* Token.cpp */,
 			);
 			name = "Source Analyses";

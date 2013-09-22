@@ -6,5 +6,5 @@
 //  Copyright (c) 2013 Albert Varaksin. All rights reserved.
 //
 #include "wx.xcconfig"
-FBIDE_CXXFLAGS = -I/usr/local/include/
-FBIDE_LDFLAGS  = -lboost_system
+FBIDE_CXXFLAGS =
+FBIDE_LDFLAGS  =
