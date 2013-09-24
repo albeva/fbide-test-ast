@@ -39,15 +39,13 @@ void SourceContext::analyze(int line, int offset, int length)
     while ((tmp = lexer.next())) {
         if (!m_root) m_root = tmp;
         if (token) token->setNext(tmp);
-        if (tmp->getKind() == TokenKind::Identifier) {
-            m_identifiers.push_back(tmp->getLexeme());
-        }
         token = tmp;
     };
     
-    // sort
-    std::unique(m_identifiers.begin(), m_identifiers.end());
-    std::sort(m_identifiers.begin(), m_identifiers.end());
+    // parse the tokens
+    Parser parser;
+    parser.setRoot(m_root);
+    parser.parse();
 }
 
 

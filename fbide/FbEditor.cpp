@@ -33,6 +33,8 @@ BEGIN_EVENT_TABLE (FbEditor, wxStyledTextCtrl)
 END_EVENT_TABLE()
 
 
+static const int ErrorIndicator = wxSTC_INDIC_CONTAINER;
+
 /**
  * create
  */
@@ -55,6 +57,10 @@ FbEditor::FbEditor(wxWindow *parent, wxWindowID id) : wxStyledTextCtrl(parent, i
     setStyle(TokenStyle::String,       "red");
     setStyle(TokenStyle::Operator,     "brown", true);
     setStyle(TokenStyle::Comment,      "gray", false, true);
+    
+    
+    IndicatorSetStyle(ErrorIndicator, wxSTC_INDIC_SQUIGGLE);
+    IndicatorSetForeground(ErrorIndicator, wxColour("red"));
 }
 
 
@@ -119,7 +125,6 @@ void FbEditor::onCharAdded(wxStyledTextEvent & event)
     }
     
     if (count > 0) {
-        LOG_V(words);
         AutoCompShow((int)w.Length(), words);
     }
 }
@@ -136,7 +141,8 @@ void FbEditor::onStyleNeeded(wxStyledTextEvent & event)
     startPos       = PositionFromLine(startLine);
     // end position
     int lastPos    = event.GetPosition();
-    int lastLine   = std::max(LineFromPosition(lastPos), GetFirstVisibleLine() + LinesOnScreen());
+    int lastLine   = std::max(LineFromPosition(lastPos), std::min(GetLineCount(), GetFirstVisibleLine() + LinesOnScreen()));
+    lastPos        = GetLineEndPosition(lastLine);
         
     // get token
     auto token = m_srcCtx->getLine(startLine, lastLine);
@@ -144,11 +150,16 @@ void FbEditor::onStyleNeeded(wxStyledTextEvent & event)
     // set stylling position
     StartStyling(startPos, INT_MAX);
     
+    // clear indicatirs
+    SetIndicatorCurrent(ErrorIndicator);
+    IndicatorClearRange(startPos, lastPos - startPos);
+    
     // no token? just colour to default
     if (!token) {
         style(lastPos - startPos, TokenStyle::Default);
         return;
     }
+    
     
     // style the tokens
     int line = startLine;
@@ -226,6 +237,10 @@ void FbEditor::onStyleNeeded(wxStyledTextEvent & event)
  */
 void FbEditor::style(int length, TokenPtr token)
 {
+    if (token->getKind() == TokenKind::Invalid || !token->isValid()) {
+        SetIndicatorCurrent(ErrorIndicator);
+        IndicatorFillRange(GetEndStyled(), length);
+    }
     style(length, _tokenStyles[(int)token->getKind()]);
 }
 

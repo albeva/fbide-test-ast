@@ -33,6 +33,8 @@ std::shared_ptr<Token> Token::create(TokenKind kind, const TokenLoc & loc, std::
 Token::Token(TokenKind kind, const TokenLoc & loc, std::string lexeme)
 : m_kind(kind),
   m_loc(loc),
+  m_isValid(true),
+  m_errorCode(0),
   m_lexeme(lexeme),
   m_next(nullptr)
 {}

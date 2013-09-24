@@ -138,6 +138,18 @@ struct Token
     
     
     /**
+     * return true if this is a valid token
+     */
+    inline bool isValid() const { return m_isValid; }
+    
+    
+    /**
+     * Set token valid state
+     */
+    inline void setValid(bool valid) { m_isValid = valid; }
+    
+    
+    /**
      * print out token information
      */
     std::string toString();
@@ -147,12 +159,22 @@ private:
     /**
      * Token kind
      */
-    const TokenKind m_kind;
+    TokenKind m_kind;
     
     /**
      * Token location
      */
-    const TokenLoc m_loc;
+    TokenLoc m_loc;
+    
+    /**
+     * Is this a valid token ?
+     */
+    bool m_isValid;
+    
+    /**
+     * Associated error / warning if this is not a valid token
+     */
+    int m_errorCode;
     
     /**
      * token lexeme
