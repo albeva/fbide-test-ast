@@ -33,3 +33,14 @@ Need:
 - scope aweness - to provide proper completition list
 
 
+- trigger parse only after full identifier is written
+- trigger sem. analyses only after a new line
+- lex only changes & reuse tokens
+  * after inserting a character to an identifier then create token once
+    and later only update
+  * when inserting text should only scan the inserted range
+  * when deleting text should only remove token range
+  * when deleting a character modify existing token until word is deleted
+    only then remove the token
+  * when deleting / adding a token that affects multiple lines - set range that
+    must be updated
