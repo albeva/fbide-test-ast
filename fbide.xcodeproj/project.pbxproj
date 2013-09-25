@@ -12,6 +12,7 @@
 		364D189517E778F100A7F3BE /* Lexer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 364D189317E778F100A7F3BE /* Lexer.cpp */; };
 		364D189817E7790100A7F3BE /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 364D189617E7790100A7F3BE /* Parser.cpp */; };
 		3685505A17E3D2A1002EB0C5 /* langauge.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3685505917E3D2A1002EB0C5 /* langauge.txt */; };
+		36A44B1B17F047EE00F12F9B /* base.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 36A44B1A17F047EE00F12F9B /* base.xcconfig */; };
 		36B1031517EDEB23004599DB /* Token.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36B1031317EDEB23004599DB /* Token.cpp */; };
 		36B8390E17EE30FC00A9511A /* FbEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36B8390C17EE30FC00A9511A /* FbEditor.cpp */; };
 		36B8392C17EE67E100A9511A /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 36B8392217EE67E100A9511A /* README.md */; };
@@ -22,7 +23,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3631570317E2831800F23D8A /* base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = base.xcconfig; sourceTree = "<group>"; };
 		364D185617E603E100A7F3BE /* Ast.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Ast.cpp; sourceTree = "<group>"; };
 		364D185717E603E100A7F3BE /* Ast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ast.h; sourceTree = "<group>"; };
 		364D185817E603E100A7F3BE /* fbide.pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fbide.pch.h; sourceTree = "<group>"; };
@@ -33,6 +33,7 @@
 		364D189617E7790100A7F3BE /* Parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Parser.cpp; sourceTree = "<group>"; };
 		364D189717E7790100A7F3BE /* Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Parser.h; sourceTree = "<group>"; };
 		3685505917E3D2A1002EB0C5 /* langauge.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = langauge.txt; path = docs/langauge.txt; sourceTree = "<group>"; };
+		36A44B1A17F047EE00F12F9B /* base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = base.xcconfig; sourceTree = "<group>"; };
 		36B1031317EDEB23004599DB /* Token.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Token.cpp; sourceTree = "<group>"; };
 		36B1031417EDEB23004599DB /* Token.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Token.h; sourceTree = "<group>"; };
 		36B1031717EE19FD004599DB /* Token.def.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Token.def.h; sourceTree = "<group>"; };
@@ -145,8 +146,8 @@
 		36C487D817E0FCD400906651 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				36A44B1A17F047EE00F12F9B /* base.xcconfig */,
 				36C4880817E0FF8400906651 /* wx.xcconfig */,
-				3631570317E2831800F23D8A /* base.xcconfig */,
 				36C487D917E0FCD400906651 /* fbide-Info.plist */,
 				36C487DF17E0FCD400906651 /* fbide-Prefix.pch */,
 			);
@@ -212,6 +213,7 @@
 				36C4880917E0FF8400906651 /* wx.xcconfig in Resources */,
 				3685505A17E3D2A1002EB0C5 /* langauge.txt in Resources */,
 				36B8392E17EE67F300A9511A /* syntax_analyses.txt in Resources */,
+				36A44B1B17F047EE00F12F9B /* base.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,6 +257,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -292,6 +295,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -321,8 +325,9 @@
 		};
 		36C4880017E0FCD400906651 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3631570317E2831800F23D8A /* base.xcconfig */;
+			baseConfigurationReference = 36A44B1A17F047EE00F12F9B /* base.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -344,8 +349,9 @@
 		};
 		36C4880117E0FCD400906651 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3631570317E2831800F23D8A /* base.xcconfig */;
+			baseConfigurationReference = 36A44B1A17F047EE00F12F9B /* base.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
