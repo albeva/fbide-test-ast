@@ -10,6 +10,9 @@
 #include <exception>
 
 
+#define EXPECT(_expr) if ((_expr) == false) return false;
+
+
 /**
  * Skip comment nodes
  */
@@ -59,18 +62,6 @@ bool Parser::accept(TokenKind kind)
 
 
 /**
- * expect next token to be of type. Mark as invalid if doesn't match
- */
-bool Parser::expect(TokenKind kind)
-{
-    if (!match(kind)) {
-        // throw std::exception(); ?
-    }
-    return false;
-}
-
-
-/**
  * move to the next token
  */
 void Parser::move()
@@ -83,7 +74,7 @@ void Parser::move()
 /**
  * Parse
  */
-void Parser::parse()
+bool Parser::parse()
 {
     while (m_token) {
         // DIM
@@ -97,52 +88,119 @@ void Parser::parse()
         }
         move();
     };
+    
+    // sort
+    std::unique(identifiers.begin(), identifiers.end());
+    std::sort(identifiers.begin(), identifiers.end());
+    
+    // done
+    return true;
+}
+
+
+/**
+ * Parse any expression
+ */
+bool Parser::parseExpression()
+{
+    return accept(TokenKind::StringLiteral)
+        || accept(TokenKind::NumberLiteral);
+}
+
+
+/**
+ * Parse a type expression
+ */
+bool Parser::parseTypeExpression()
+{
+    return accept(TokenKind::INTEGER)
+        || accept(TokenKind::STRING);
 }
 
 
 /**
  * parse DECLARE statement
  */
-void Parser::parseDeclare()
+bool Parser::parseDeclare()
 {
+    // "DECLARE"
+    EXPECT( accept(TokenKind::DECLARE) );
     
+    // "FUNCTION
+    EXPECT( accept(TokenKind::FUNCTION) );
+    
+    // identifier
+    EXPECT( match(TokenKind::Identifier) );
+    identifiers.push_back(m_token->getOriginal());
+    move();
+    
+    // "("
+    EXPECT( accept(TokenKind::ParenOpen) );
+    
+    // TODO parameters
+    if (!match(TokenKind::ParenClose)) EXPECT( parseArguList() )
+    
+    // ")"
+    EXPECT( accept(TokenKind::ParenClose) );
+    
+    // "AS"
+    EXPECT( accept(TokenKind::AS) );
+    
+    // Type
+    EXPECT( parseTypeExpression() );
+    
+    // done
+    return match(TokenKind::EndOfLine);
+}
+
+
+/**
+ * Parse agurment list
+ */
+bool Parser::parseArguList()
+{
+    // Argument { "," Argument }
+    do {
+        // Identifier
+        EXPECT( accept(TokenKind::Identifier) );
+        
+        // "AS"
+        EXPECT( accept(TokenKind::AS) );
+        
+        // Type
+        EXPECT( parseTypeExpression() );
+        
+    } while (accept(TokenKind::Comma));
+    
+    return true;
 }
 
 
 /**
  * Parse DIM statement
  */
-void Parser::parseDim()
+bool Parser::parseDim()
 {
     // DIM
-    if (!accept(TokenKind::DIM)) return;
+    EXPECT( accept(TokenKind::DIM) );
     
     // identifier
-    if (!accept(TokenKind::Identifier)) return;
+    EXPECT( match(TokenKind::Identifier) );
+    identifiers.push_back(m_token->getOriginal());
+    move();
     
     // AS
-    if (!accept(TokenKind::AS)) return;
+    EXPECT( accept(TokenKind::AS) );
     
-    // STRING | INTEGER
-    if (match(TokenKind::INTEGER) || match(TokenKind::STRING)) {
-        move();
-    } else {
-        return;
+    // Type
+    EXPECT( parseTypeExpression() );
+    
+    // the end ?
+    if (accept(TokenKind::Assign)) {
+        // Expression
+        EXPECT( parseExpression() );
     }
     
-    // [ = Expression ]
-    if (!accept(TokenKind::Assign)) return;
-    
-    // IntegerLiteral | StringLiteral
-    if (match(TokenKind::NumberLiteral) || match(TokenKind::StringLiteral)) {
-        move();
-    } else {
-        return;
-    }
+    // done ok
+    return match(TokenKind::EndOfLine);
 }
-
-
-
-
-
-

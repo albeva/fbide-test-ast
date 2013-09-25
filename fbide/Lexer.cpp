@@ -239,21 +239,21 @@ TokenPtr Lexer::identifier()
     
     // is this a keyword?
     auto iter = _keywords.find(lexeme);
-    return token(iter == _keywords.end() ? TokenKind::Identifier : iter->second, lexeme);
+    return token(iter == _keywords.end() ? TokenKind::Identifier : iter->second, lexeme, std::string(m_tokenStart, m_input));
 }
 
 
 /**
  * create new token
  */
-TokenPtr Lexer::token(TokenKind kind, std::string lexeme)
+TokenPtr Lexer::token(TokenKind kind, std::string lexeme, std::string original)
 {
     if (kind != TokenKind::EndOfLine) {
         m_tokenLoc.length  = (int)(m_input - m_tokenStart);
         m_tokenLoc.endLine = m_loc.line;
         m_tokenLoc.endCol  = m_loc.col;
     }
-    return Token::create(kind, m_tokenLoc, lexeme);
+    return Token::create(kind, m_tokenLoc, lexeme, original);
 }
 
 

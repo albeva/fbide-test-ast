@@ -19,6 +19,8 @@ class Parser
     
 public:
     
+    std::vector<std::string> identifiers;
+    
     /**
      * default constructor
      */
@@ -40,11 +42,6 @@ public:
     bool accept(TokenKind kind);
     
     /**
-     * expect next token to be of type. Mark as invalid if doesn't match
-     */
-    bool expect(TokenKind kind);
-    
-    /**
      * move to the next token
      */
     void move();
@@ -52,16 +49,31 @@ public:
     /**
      * Parse
      */
-    void parse();
+    bool parse();
+    
+    /**
+     * parse the expression
+     */
+    bool parseExpression();
+    
+    /**
+     * parse function parameter list
+     */
+    bool parseArguList();
+    
+    /**
+     * parse type expression
+     */
+    bool parseTypeExpression();
     
     /**
      * parse DECLARE statement
      */
-    void parseDeclare();
+    bool parseDeclare();
     
     /**
      * Parse DIM statement
      */
-    void parseDim();
+    bool parseDim();
 
 };

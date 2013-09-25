@@ -46,6 +46,7 @@ void SourceContext::analyze(int line, int offset, int length)
     Parser parser;
     parser.setRoot(m_root);
     parser.parse();
+    m_identifiers = parser.identifiers;
 }
 
 

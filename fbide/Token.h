@@ -70,13 +70,13 @@ struct Token
     /**
      * create pooled token object
      */
-    static TokenPtr create(TokenKind kind, const TokenLoc & loc, std::string lexeme = "");
+    static TokenPtr create(TokenKind kind, const TokenLoc & loc, std::string lexeme = "", std::string original = "");
     
     
     /**
      * Create new token
      */
-    Token(TokenKind kind, const TokenLoc & loc, std::string lexeme = "");
+    Token(TokenKind kind, const TokenLoc & loc, std::string lexeme = "", std::string original = "");
     
     
     /**
@@ -122,7 +122,12 @@ struct Token
     /**
      * Get token lexeme
      */
-    inline const std::string & getLexeme() const { return m_lexeme; }
+    inline std::string getLexeme() const { return m_lexeme; }
+    
+    /**
+     * Get original token string
+     */
+    inline std::string getOriginal() const { return m_original; }
     
     
     /**
@@ -177,9 +182,14 @@ private:
     int m_errorCode;
     
     /**
-     * token lexeme
+     * cleaned token lexeme
      */
-    const std::string m_lexeme;
+    std::string m_lexeme;
+    
+    /**
+     * original token name
+     */
+    std::string m_original;
     
     /**
      * next token. Linked list

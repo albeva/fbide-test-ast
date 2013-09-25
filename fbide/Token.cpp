@@ -21,21 +21,22 @@ namespace {
 /**
  * TODO: create & return a pooled token object.
  */
-std::shared_ptr<Token> Token::create(TokenKind kind, const TokenLoc & loc, std::string lexeme)
+std::shared_ptr<Token> Token::create(TokenKind kind, const TokenLoc & loc, std::string lexeme, std::string original)
 {
-    return std::make_shared<Token>(kind, loc, lexeme);
+    return std::make_shared<Token>(kind, loc, lexeme, original);
 }
 
 
 /**
  * Create new token
  */
-Token::Token(TokenKind kind, const TokenLoc & loc, std::string lexeme)
+Token::Token(TokenKind kind, const TokenLoc & loc, std::string lexeme, std::string original)
 : m_kind(kind),
   m_loc(loc),
   m_isValid(true),
   m_errorCode(0),
   m_lexeme(lexeme),
+  m_original(original),
   m_next(nullptr)
 {}
 

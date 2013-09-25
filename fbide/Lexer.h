@@ -46,7 +46,7 @@ private:
     /**
      * create new token
      */
-    TokenPtr token(TokenKind kind, std::string lexeme = "");
+    TokenPtr token(TokenKind kind, std::string lexeme = "", std::string original = "");
     
     /**
      * Read in current character from the input.

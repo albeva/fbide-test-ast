@@ -33,7 +33,11 @@ BEGIN_EVENT_TABLE (FbEditor, wxStyledTextCtrl)
 END_EVENT_TABLE()
 
 
-static const int ErrorIndicator = wxSTC_INDIC_CONTAINER;
+// indicators
+enum {
+    ErrorIndicator = wxSTC_INDIC_CONTAINER
+};
+
 
 /**
  * create
@@ -58,7 +62,7 @@ FbEditor::FbEditor(wxWindow *parent, wxWindowID id) : wxStyledTextCtrl(parent, i
     setStyle(TokenStyle::Operator,     "brown", true);
     setStyle(TokenStyle::Comment,      "gray", false, true);
     
-    
+    // error
     IndicatorSetStyle(ErrorIndicator, wxSTC_INDIC_SQUIGGLE);
     IndicatorSetForeground(ErrorIndicator, wxColour("red"));
 }
@@ -117,8 +121,10 @@ void FbEditor::onCharAdded(wxStyledTextEvent & event)
     wxString words = "";
     int count = 0;
     for (auto id : m_srcCtx->getIdentifiers()) {
-        if (id.compare(0, w.length(), w) == 0) {
-            if (id.length() == w.length()) continue;
+        wxString ID(id);
+        ID.UpperCase();
+        if (ID.compare(0, w.length(), w) == 0) {
+            if (ID.length() == w.length()) continue;
             words += id + " ";
             count++;
         }
