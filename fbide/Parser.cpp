@@ -5,10 +5,9 @@
 //  Created by Albert on 16/09/2013.
 //  Copyright (c) 2013 Albert Varaksin. All rights reserved.
 //
-
 #include "Parser.h"
-#include <exception>
-
+#include "Token.h"
+#include "SourceScope.h"
 
 #define EXPECT(_expr) if ((_expr) == false) return false;
 
@@ -23,10 +22,12 @@ static inline TokenPtr skipComments(TokenPtr token)
 }
 
 
-Parser::Parser()
-: m_token(nullptr), m_next(nullptr)
-{
-}
+/**
+ * Create Parser object
+ */
+Parser::Parser(SourceScopePtr scope)
+: m_token(nullptr), m_next(nullptr), m_lastToken(nullptr), m_scope(scope)
+{}
 
 
 /**
@@ -34,7 +35,8 @@ Parser::Parser()
  */
 void Parser::setRoot(TokenPtr token)
 {
-    m_next = skipComments(token);
+    m_next      = skipComments(token);
+    m_lastToken = m_next;
     move();
 }
 
@@ -44,7 +46,8 @@ void Parser::setRoot(TokenPtr token)
  */
 bool Parser::match(TokenKind kind)
 {
-    return m_token && m_token->getKind() == kind;
+    if (m_token == nullptr) return false;
+    return m_token->getKind() == kind;
 }
 
 
@@ -66,6 +69,7 @@ bool Parser::accept(TokenKind kind)
  */
 void Parser::move()
 {
+    if (m_next) m_lastToken = m_next;
     m_token = m_next;
     m_next  = m_next ? skipComments(m_next->getNext()) : nullptr;
 }
@@ -76,24 +80,57 @@ void Parser::move()
  */
 bool Parser::parse()
 {
+    // set first token
+    m_scope->setFirstToken(m_token);
+    
+    // iterate through the lines
     while (m_token) {
         // DIM
-        if      (match(TokenKind::DIM))     parseDim();
+        if      (match(TokenKind::DIM))      parseDim();
         // DECLARE
-        else if (match(TokenKind::DECLARE)) parseDeclare();
+        else if (match(TokenKind::DECLARE))  parseDeclare();
+        // FUNCTION
+        else if (match(TokenKind::FUNCTION)) parseFunction();
         
         // not end of the line?
         if (!match(TokenKind::EndOfLine)) {
-            m_token->setValid(false);
+            if (m_token) m_token->setValid(false);
         }
         move();
     };
     
-    // sort
-    std::unique(identifiers.begin(), identifiers.end());
-    std::sort(identifiers.begin(), identifiers.end());
+    // set last token
+    m_scope->setLastToken(m_lastToken);
     
     // done
+    return true;
+}
+
+
+/**
+ * parse a scoped block
+ */
+bool Parser::parseBlock()
+{
+    while (m_token) {
+        // DIM
+        if (match(TokenKind::DIM)) parseDim();
+        
+        // END ?
+        else if (accept(TokenKind::END)) {
+            return accept(m_scopeStack.top());
+        }
+        
+        // not end of the line?
+        if (m_token) {
+            if (!match(TokenKind::EndOfLine)) {
+                m_token->setValid(false);
+            }
+        } else {
+            break;
+        }
+        move();
+    };
     return true;
 }
 
@@ -131,14 +168,16 @@ bool Parser::parseDeclare()
     
     // identifier
     EXPECT( match(TokenKind::Identifier) );
-    identifiers.push_back(m_token->getOriginal());
+    if (!m_scope->addSymbol(m_token)) {
+        m_token->setValid(false);
+    }
     move();
     
     // "("
     EXPECT( accept(TokenKind::ParenOpen) );
     
     // TODO parameters
-    if (!match(TokenKind::ParenClose)) EXPECT( parseArguList() )
+    if (!match(TokenKind::ParenClose)) EXPECT( parseArgList() );
     
     // ")"
     EXPECT( accept(TokenKind::ParenClose) );
@@ -157,12 +196,18 @@ bool Parser::parseDeclare()
 /**
  * Parse agurment list
  */
-bool Parser::parseArguList()
+bool Parser::parseArgList()
 {
     // Argument { "," Argument }
     do {
         // Identifier
-        EXPECT( accept(TokenKind::Identifier) );
+        EXPECT( match(TokenKind::Identifier) );
+        if (m_scope->getType() == ScopeType::FunctionImplementation) {
+            if (!m_scope->addSymbol(m_token)) {
+                m_token->setValid(false);
+            }
+        }
+        move();
         
         // "AS"
         EXPECT( accept(TokenKind::AS) );
@@ -176,6 +221,59 @@ bool Parser::parseArguList()
 }
 
 
+
+/**
+ * parse FUNCTION statement
+ */
+bool Parser::parseFunction()
+{
+    // FUNCTION
+    EXPECT( accept(TokenKind::FUNCTION) );
+    
+    // identifier
+    EXPECT( match(TokenKind::Identifier) );
+    if (!m_scope->addSymbol(m_token)) {
+        m_token->setValid(false);
+    }
+    move();
+    
+    // "("
+    EXPECT( accept(TokenKind::ParenOpen) );
+    
+    // create new scope
+    auto tmp = m_scope;
+    m_scope = SourceScope::create(ScopeType::FunctionImplementation, m_scope);
+    SCOPED_GUARD([&]{
+        m_scope = tmp;
+    });
+
+    // TODO parameters
+    if (!match(TokenKind::ParenClose)) EXPECT( parseArgList() );
+        
+    // ")"
+    EXPECT( accept(TokenKind::ParenClose) );
+    
+    // "AS"
+    EXPECT( accept(TokenKind::AS) );
+    
+    // Type
+    EXPECT( parseTypeExpression() );
+    
+    // end of line
+    EXPECT( accept(TokenKind::EndOfLine) );
+    
+    // expect END FUNCTION
+    m_scopeStack.push(TokenKind::FUNCTION);
+    m_scope->setFirstToken(m_token);
+    bool success = parseBlock();
+    m_scope->setLastToken(m_lastToken);
+    m_scopeStack.pop();
+    
+    // done
+    return success && match(TokenKind::EndOfLine);
+}
+
+
 /**
  * Parse DIM statement
  */
@@ -186,7 +284,9 @@ bool Parser::parseDim()
     
     // identifier
     EXPECT( match(TokenKind::Identifier) );
-    identifiers.push_back(m_token->getOriginal());
+    if (!m_scope->addSymbol(m_token)) {
+        m_token->setValid(false);
+    }
     move();
     
     // AS
@@ -204,3 +304,11 @@ bool Parser::parseDim()
     // done ok
     return match(TokenKind::EndOfLine);
 }
+
+
+
+
+
+
+
+

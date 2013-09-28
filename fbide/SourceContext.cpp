@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Albert Varaksin. All rights reserved.
 //
 #include "SourceContext.h"
+#include "SourceScope.h"
 #include "Ast.h"
 #include "Lexer.h"
 #include "Parser.h"
@@ -15,7 +16,9 @@
 /**
  * Create
  */
-SourceContext::SourceContext() : m_buffer(nullptr)
+SourceContext::SourceContext()
+: m_buffer(nullptr),
+  m_rootScope(nullptr)
 {}
 
 
@@ -32,7 +35,9 @@ void SourceContext::analyze(int line, int offset, int length)
     
     // reset current token tree
     m_root = nullptr;
-    m_identifiers.clear();
+    
+    // root scope
+    m_rootScope = SourceScope::create(ScopeType::SourceRoot);
     
     // tokens
     std::shared_ptr<Token> token, tmp;
@@ -43,10 +48,9 @@ void SourceContext::analyze(int line, int offset, int length)
     };
     
     // parse the tokens
-    Parser parser;
+    Parser parser(m_rootScope);
     parser.setRoot(m_root);
     parser.parse();
-    m_identifiers = parser.identifiers;
 }
 
 
@@ -73,9 +77,24 @@ std::shared_ptr<Token> SourceContext::getLine(int line, int last)
 /**
  * get available identifiers
  */
-const std::vector<std::string> & SourceContext::getIdentifiers() const
+std::vector<std::string> SourceContext::getIdentifiers(int line, int pos)
 {
-    return m_identifiers;
+    std::vector<std::string> identifiers;
+    auto scope = m_rootScope->findScope(line, pos);
+    while (scope) {
+        for (auto s : scope->getSymbols()) {
+            if (s->getEndLine() <= line) {
+                identifiers.push_back(s->getOriginal());
+            }
+        }
+        scope = scope->getParent();
+    }
+    
+    // sort the list
+    sort(identifiers.begin(), identifiers.end());
+    
+    // done
+    return identifiers;
 }
 
 

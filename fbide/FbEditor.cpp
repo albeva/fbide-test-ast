@@ -9,9 +9,6 @@
 #include "FbEditor.h"
 #include "Token.h"
 #include "SourceContext.h"
-
-#define LOG(_msg) std::cout << _msg << '\n';
-#define LOG_V(_var) std::cout << #_var " = " << _var << '\n';
     
 /**
  * map token types to the style used in the editor
@@ -108,11 +105,10 @@ void FbEditor::onModified(wxStyledTextEvent & event)
 
 /**
  * CHaracter added
- */
+ */ 
 void FbEditor::onCharAdded(wxStyledTextEvent & event)
 {
     int p = GetCurrentPos();
-    WordStartPosition(p, true);
     auto w = GetTextRange(WordStartPosition(p, true), p);
     if (w.length() < 2) return;
 
@@ -120,7 +116,7 @@ void FbEditor::onCharAdded(wxStyledTextEvent & event)
     w.UpperCase();
     wxString words = "";
     int count = 0;
-    for (auto id : m_srcCtx->getIdentifiers()) {
+    for (auto id : m_srcCtx->getIdentifiers(LineFromPosition(p), p - LineFromPosition(p))) {
         wxString ID(id);
         ID.UpperCase();
         if (ID.compare(0, w.length(), w) == 0) {

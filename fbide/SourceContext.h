@@ -12,6 +12,7 @@
  */
 class Ast;
 class Token;
+class SourceScope;
 
 
 /**
@@ -57,7 +58,7 @@ public:
     /**
      * Get all available identifiers
      */
-    const std::vector<std::string> & getIdentifiers() const;
+    std::vector<std::string> getIdentifiers(int line, int pos);
     
 private:
     
@@ -72,9 +73,9 @@ private:
     std::shared_ptr<Token> m_root;
     
     /**
-     * all identifiers
+     * The root scope
      */
-    std::vector<std::string> m_identifiers;
+    std::shared_ptr<SourceScope> m_rootScope;
 };
 
 

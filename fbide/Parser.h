@@ -6,7 +6,15 @@
 //  Copyright (c) 2013 Albert Varaksin. All rights reserved.
 //
 #pragma once
-#include "Token.h"
+
+/**
+ * Forward reference
+ */
+enum class TokenKind : int;
+class SourceScope;
+class Token;
+typedef std::shared_ptr<Token> TokenPtr;
+typedef std::shared_ptr<SourceScope> SourceScopePtr;
 
 
 /**
@@ -16,15 +24,16 @@ class Parser
 {
     TokenPtr m_token;
     TokenPtr m_next;
+    TokenPtr m_lastToken; // last non null token
+    std::stack<TokenKind> m_scopeStack;
+    SourceScopePtr m_scope;
     
 public:
-    
-    std::vector<std::string> identifiers;
     
     /**
      * default constructor
      */
-    Parser();
+    Parser(SourceScopePtr scope);
     
     /**
      * set root token
@@ -52,6 +61,11 @@ public:
     bool parse();
     
     /**
+     * parse scoped block
+     */
+    bool parseBlock();
+    
+    /**
      * parse the expression
      */
     bool parseExpression();
@@ -59,7 +73,7 @@ public:
     /**
      * parse function parameter list
      */
-    bool parseArguList();
+    bool parseArgList();
     
     /**
      * parse type expression
@@ -70,6 +84,11 @@ public:
      * parse DECLARE statement
      */
     bool parseDeclare();
+    
+    /**
+     * parse FUNCTION statement
+     */
+    bool parseFunction();
     
     /**
      * Parse DIM statement

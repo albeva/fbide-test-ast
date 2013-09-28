@@ -252,6 +252,9 @@ TokenPtr Lexer::token(TokenKind kind, std::string lexeme, std::string original)
         m_tokenLoc.length  = (int)(m_input - m_tokenStart);
         m_tokenLoc.endLine = m_loc.line;
         m_tokenLoc.endCol  = m_loc.col;
+    } else {
+        m_tokenLoc.endLine = m_tokenLoc.line;
+        m_tokenLoc.col     = m_tokenLoc.col;
     }
     return Token::create(kind, m_tokenLoc, lexeme, original);
 }

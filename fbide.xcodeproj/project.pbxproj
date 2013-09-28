@@ -12,6 +12,7 @@
 		364D189517E778F100A7F3BE /* Lexer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 364D189317E778F100A7F3BE /* Lexer.cpp */; };
 		364D189817E7790100A7F3BE /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 364D189617E7790100A7F3BE /* Parser.cpp */; };
 		3685505A17E3D2A1002EB0C5 /* langauge.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3685505917E3D2A1002EB0C5 /* langauge.txt */; };
+		3686A3D117F7180F006EC88C /* SourceScope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3686A3CF17F7180F006EC88C /* SourceScope.cpp */; };
 		36A44B1B17F047EE00F12F9B /* base.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 36A44B1A17F047EE00F12F9B /* base.xcconfig */; };
 		36B1031517EDEB23004599DB /* Token.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36B1031317EDEB23004599DB /* Token.cpp */; };
 		36B8390E17EE30FC00A9511A /* FbEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36B8390C17EE30FC00A9511A /* FbEditor.cpp */; };
@@ -33,6 +34,9 @@
 		364D189617E7790100A7F3BE /* Parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Parser.cpp; sourceTree = "<group>"; };
 		364D189717E7790100A7F3BE /* Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Parser.h; sourceTree = "<group>"; };
 		3685505917E3D2A1002EB0C5 /* langauge.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = langauge.txt; path = docs/langauge.txt; sourceTree = "<group>"; };
+		3686A3CF17F7180F006EC88C /* SourceScope.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SourceScope.cpp; sourceTree = "<group>"; };
+		3686A3D017F7180F006EC88C /* SourceScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SourceScope.h; sourceTree = "<group>"; };
+		3686A3D217F725C7006EC88C /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
 		36A44B1A17F047EE00F12F9B /* base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = base.xcconfig; sourceTree = "<group>"; };
 		36B1031317EDEB23004599DB /* Token.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Token.cpp; sourceTree = "<group>"; };
 		36B1031417EDEB23004599DB /* Token.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Token.h; sourceTree = "<group>"; };
@@ -79,6 +83,8 @@
 			children = (
 				364D189117E6051800A7F3BE /* SourceContext.h */,
 				364D189017E6051800A7F3BE /* SourceContext.cpp */,
+				3686A3D017F7180F006EC88C /* SourceScope.h */,
+				3686A3CF17F7180F006EC88C /* SourceScope.cpp */,
 				364D189417E778F100A7F3BE /* Lexer.h */,
 				364D189317E778F100A7F3BE /* Lexer.cpp */,
 				364D189717E7790100A7F3BE /* Parser.h */,
@@ -132,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				36C4880517E0FDE500906651 /* main.cpp */,
+				3686A3D217F725C7006EC88C /* utils.h */,
 				364D185717E603E100A7F3BE /* Ast.h */,
 				364D185617E603E100A7F3BE /* Ast.cpp */,
 				36B8390D17EE30FC00A9511A /* FbEditor.h */,
@@ -243,6 +250,7 @@
 				364D189217E6051800A7F3BE /* SourceContext.cpp in Sources */,
 				364D188B17E603E100A7F3BE /* Ast.cpp in Sources */,
 				36C4880617E0FDE500906651 /* main.cpp in Sources */,
+				3686A3D117F7180F006EC88C /* SourceScope.cpp in Sources */,
 				36B1031517EDEB23004599DB /* Token.cpp in Sources */,
 				36B8390E17EE30FC00A9511A /* FbEditor.cpp in Sources */,
 				364D189817E7790100A7F3BE /* Parser.cpp in Sources */,
