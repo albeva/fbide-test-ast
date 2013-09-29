@@ -75,6 +75,11 @@ public:
     const SymbolList & getSymbols() const { return m_symbols; }
     
     /**
+     * find symbol
+     */
+    TokenPtr findSymbol(TokenPtr token);
+    
+    /**
      * Set first token
      */
     void inline setFirstToken(TokenPtr token) { m_firstToken = token; }

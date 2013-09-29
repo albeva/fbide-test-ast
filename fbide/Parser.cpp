@@ -91,6 +91,8 @@ bool Parser::parse()
         else if (match(TokenKind::DECLARE))  parseDeclare();
         // FUNCTION
         else if (match(TokenKind::FUNCTION)) parseFunction();
+        // expect an assignment or an expression
+        else if(!match(TokenKind::EndOfLine)) parseAssignmentOrExpression();
         
         // not end of the line?
         if (!match(TokenKind::EndOfLine)) {
@@ -115,11 +117,12 @@ bool Parser::parseBlock()
     while (m_token) {
         // DIM
         if (match(TokenKind::DIM)) parseDim();
-        
         // END ?
         else if (accept(TokenKind::END)) {
             return accept(m_scopeStack.top());
         }
+        // expect an assignment or an expression
+        else if(!match(TokenKind::EndOfLine)) parseAssignmentOrExpression();
         
         // not end of the line?
         if (m_token) {
@@ -136,12 +139,75 @@ bool Parser::parseBlock()
 
 
 /**
+ * parse an assignment or an expression
+ */
+bool Parser::parseAssignmentOrExpression()
+{
+    auto r = parseExpression();
+    if (r && accept(TokenKind::Assign)) {
+        return parseExpression();
+    }
+    return r;
+}
+
+
+/**
  * Parse any expression
+ * wip. issues:
+ * assignment expression
+ * operator = has 2 meanings: assign and compare
+ * single identifier as the first token is probably invalid
+ * while it is legal as a function parameter ...
  */
 bool Parser::parseExpression()
 {
-    return accept(TokenKind::StringLiteral)
-        || accept(TokenKind::NumberLiteral);
+    // string or a number literal
+    if (accept(TokenKind::StringLiteral) || accept(TokenKind::NumberLiteral))
+        return true;
+    
+    // "(" expression ")"
+    if (accept(TokenKind::ParenOpen)) {
+        auto r = parseExpression();
+        EXPECT(accept(TokenKind::ParenClose));
+        return r;
+    }
+    
+    // ID
+    if (match(TokenKind::Identifier)) {
+        if (!m_scope->findSymbol(m_token)) {
+            m_token->setValid(false);
+        }
+        move();
+        
+        // function call?
+        if (accept(TokenKind::ParenOpen)) {
+            if (!match(TokenKind::ParenClose)) {
+                EXPECT( parseParamList() )
+            }
+            EXPECT( accept(TokenKind::ParenClose) )
+        }
+        
+        // success
+        return true;
+    }
+    
+    // no expression found
+    return false;
+}
+
+
+/**
+ * parse passed function parameters at the call site
+ */
+bool Parser::parseParamList()
+{
+    // Expression { "," Expression }
+    do {
+        EXPECT( parseExpression() );
+    } while (accept(TokenKind::Comma));
+    
+    // done
+    return true;
 }
 
 

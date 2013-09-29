@@ -25,6 +25,24 @@ SourceScopePtr SourceScope::create(ScopeType type, SourceScopePtr parent)
 
 
 /**
+ * find matching symbol
+ */
+TokenPtr SourceScope::findSymbol(TokenPtr token)
+{
+    // find symbol in current scope
+    for (auto & sym : m_symbols) {
+        if (sym->getLexeme() == token->getLexeme()) return sym;
+    }
+    
+    // parent scope
+    if (auto p = m_parent.lock()) return p->findSymbol(token);
+    
+    // didn't find
+    return nullptr;
+}
+
+
+/**
  * Add new identifier.
  * return false if identifier with the given name already in the list
  */

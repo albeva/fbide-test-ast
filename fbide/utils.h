@@ -34,7 +34,7 @@ public:
     /**
      * create the guard
      */
-    ScopeGuard(const Callback & callback) : m_callback(callback) {}
+    ScopeGuard(Callback && callback) : m_callback(callback) {}
     
     
     /**
@@ -50,9 +50,9 @@ public:
  * make scoped guard object
  */
 template<typename Callback>
-inline const ScopeGuard<Callback> makeScopeGuard(const Callback && callback)
+ScopeGuard<Callback> makeScopeGuard(Callback && callback)
 {
-    return ScopeGuard<Callback>(std::forward<const Callback>(callback));
+    return ScopeGuard<Callback>(std::forward<Callback>(callback));
 }
 
 /**

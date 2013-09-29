@@ -66,14 +66,25 @@ public:
     bool parseBlock();
     
     /**
+     * parse assignment or an expression
+     */
+    bool parseAssignmentOrExpression();
+    
+    /**
      * parse the expression
      */
     bool parseExpression();
     
     /**
-     * parse function parameter list
+     * parse function argument list in a declaration
      */
     bool parseArgList();
+    
+    /**
+     * Parse function parameter list. At the call site in a func
+     * call expression
+     */
+    bool parseParamList();
     
     /**
      * parse type expression
