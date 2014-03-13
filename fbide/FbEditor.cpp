@@ -58,9 +58,9 @@ FbEditor::FbEditor(wxWindow *parent, wxWindowID id) : wxStyledTextCtrl(parent, i
     setStyle(TokenStyle::String,       "red");
     setStyle(TokenStyle::Operator,     "brown", true);
     setStyle(TokenStyle::Comment,      "gray", false, true);
-    
+
     // error
-    IndicatorSetStyle(ErrorIndicator, wxSTC_INDIC_SQUIGGLE);
+    IndicatorSetStyle(ErrorIndicator, wxSTC_INDIC_SQUIGGLEPIXMAP);
     IndicatorSetForeground(ErrorIndicator, wxColour("red"));
 }
 

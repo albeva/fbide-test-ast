@@ -13,14 +13,12 @@
 		364D189817E7790100A7F3BE /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 364D189617E7790100A7F3BE /* Parser.cpp */; };
 		3685505A17E3D2A1002EB0C5 /* langauge.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3685505917E3D2A1002EB0C5 /* langauge.txt */; };
 		3686A3D117F7180F006EC88C /* SourceScope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3686A3CF17F7180F006EC88C /* SourceScope.cpp */; };
-		36A44B1B17F047EE00F12F9B /* base.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 36A44B1A17F047EE00F12F9B /* base.xcconfig */; };
 		36B1031517EDEB23004599DB /* Token.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36B1031317EDEB23004599DB /* Token.cpp */; };
 		36B8390E17EE30FC00A9511A /* FbEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36B8390C17EE30FC00A9511A /* FbEditor.cpp */; };
 		36B8392C17EE67E100A9511A /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 36B8392217EE67E100A9511A /* README.md */; };
 		36B8392E17EE67F300A9511A /* syntax_analyses.txt in Resources */ = {isa = PBXBuildFile; fileRef = 36B8392D17EE67F300A9511A /* syntax_analyses.txt */; };
 		36C487D217E0FCD400906651 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36C487D117E0FCD400906651 /* Cocoa.framework */; };
 		36C4880617E0FDE500906651 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36C4880517E0FDE500906651 /* main.cpp */; };
-		36C4880917E0FF8400906651 /* wx.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 36C4880817E0FF8400906651 /* wx.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -190,7 +188,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = FB;
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Albert Varaksin";
 			};
 			buildConfigurationList = 36C487C917E0FCD400906651 /* Build configuration list for PBXProject "fbide" */;
@@ -217,10 +215,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				36B8392C17EE67E100A9511A /* README.md in Resources */,
-				36C4880917E0FF8400906651 /* wx.xcconfig in Resources */,
 				3685505A17E3D2A1002EB0C5 /* langauge.txt in Resources */,
 				36B8392E17EE67F300A9511A /* syntax_analyses.txt in Resources */,
-				36A44B1B17F047EE00F12F9B /* base.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,7 +261,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -303,7 +298,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -335,7 +329,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 36A44B1A17F047EE00F12F9B /* base.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -359,7 +352,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 36A44B1A17F047EE00F12F9B /* base.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_OPTIMIZATION_LEVEL = fast;

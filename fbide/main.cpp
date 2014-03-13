@@ -37,9 +37,6 @@ class FBIdeApp: public wxApp
     
     // main window
     wxFrame * m_frame;
-    
-    // the editor
-    wxStyledTextCtrl * m_stc;
 };
 
 IMPLEMENT_APP(FBIdeApp)
