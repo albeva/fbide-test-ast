@@ -1,4 +1,4 @@
 fbide
 =====
 
-Editor for FreeBASIC
+Experimental way to highlight source code using a simple Lexer / Parser
